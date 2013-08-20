@@ -1,0 +1,1 @@
+alias $COMMAND='source $ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG; export DB_LOC=$DB_LOC; echo "You are in environment $NAME."'
