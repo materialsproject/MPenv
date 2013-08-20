@@ -21,13 +21,21 @@ def create_env():
     args = parser.parse_args()
 
     c = []
+    c.append(('print', 'SETTING UP VIRTUALENV'))
     c.append(("mkdir", args.name))
     c.append(("cd", args.name))
     c.append(("mkdir", "virtenv"))
     c.append("virtualenv --no-site-packages virtenv")
     c.append(("activate", os.path.join(os.getcwd(), args.name, 'virtenv/bin/activate_this.py')))
-    c.append("pip install yolk")
-    #c.append("echo DONE")
+
+    c.append(('print', 'INSTALLING FIREWORKS (developer mode)'))
+    c.append(("pip install django"))
+    c.append(("mkdir", "codes"))
+    c.append(("cd", 'codes'))
+    c.append("git clone git@github.com:materialsproject/fireworks.git")
+    c.append(("cd", 'fireworks'))
+    c.append("python setup.py develop")
+
 
     try:
         for command in c:
@@ -39,6 +47,8 @@ def create_env():
                 os.chdir(command[1])
             elif command[0] == 'activate':
                 execfile(command[1], dict(__file__=command[1]))
+            elif command[0] == 'print':
+                print '---'+command[1]
             else:
                 raise ValueError("Invalid command! {}".format(command))
     except:
