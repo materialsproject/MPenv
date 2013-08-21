@@ -41,3 +41,6 @@ nosetests.xml
 
 # Pycharm
 .idea/*
+
+# private files
+MPenv/private/*
