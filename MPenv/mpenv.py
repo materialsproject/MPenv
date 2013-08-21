@@ -19,7 +19,7 @@ def create_env():
 
     DEV_MODE = True
     BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
-    MACHINES = ['Mendel', 'Hopper']  # note: you must modify BASH_template.txt when adding machines
+    MACHINES = ('Mendel', 'Hopper')  # note: you must modify BASH_template.txt when adding machines
 
     m_description = 'This program creates a self-contained environment for running ' \
                     'and testing FireWorks workflows at NERSC'
@@ -97,6 +97,13 @@ def create_env():
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
                                                'config_{}'.format(machine), 'my_fworker.yaml'), 'w+') as f2:
+                            f2.write(appendtext)
+
+                    with open(os.path.join(module_dir, 'qadapter_{}.yaml'.format(machine))) as f:
+                        t = CustomTemplate(f.read())
+                        appendtext = t.substitute(replacements)
+                        with open(os.path.join(root_dir, args.name, 'config',
+                                               'config_{}'.format(machine), 'my_qadapter.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
 

@@ -1,0 +1,17 @@
+_fw_name: PBSAdapter (NERSC)
+rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
+nnodes: 2
+ppnode: 16
+walltime: '24:00:00'
+queue: matgen_reg
+account: matcomp
+job_name: null
+pre_rocket: |
+            #PBS -V
+            module load python/2.7.3
+            module load vasp/5.2
+            module swap numpy numpy/1.7.1
+            module load nwchem
+            module load g09
+post_rocket: null
+logdir: $$CONFIG_LOC/logs
