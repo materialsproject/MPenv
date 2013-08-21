@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 import os
 import random
 import string
@@ -13,10 +14,22 @@ __date__ = 'Aug 21, 2013'
 
 
 def create_db():
+
+    m_description = 'This program creates databases for MP environments.'
+    parser = ArgumentParser(description=m_description)
+
+    parser.add_argument('name', help='name of the new environment')
+    parser.add_argument('type', help='type of environment (FW, MP, rubicon)')
+
+    args = parser.parse_args()
+
+    if args.type != 'FW' and args.type != 'MP' and args.type!= 'rubicon':
+        raise ValueError("Invalid type! Choose from FW, MP, rubicon")
+
     module_dir = os.path.dirname(os.path.abspath(__file__))
     static_dir = os.path.join(module_dir, 'makedb_static')
 
-    ENV_NAME = "aj"
+    ENV_NAME = args.name
     curr_dir = os.getcwd()
     env_dir = os.path.join(curr_dir, ENV_NAME)
     os.makedirs(env_dir)
@@ -33,9 +46,13 @@ def create_db():
         db.authenticate(creds['admin_username'], creds['admin_password'])
 
         dbs_to_make = [('fw_{}', 'my_launchpad.yaml')]
-        dbs_to_make.append(('snl_{}', 'snl_db.yaml'))
-        dbs_to_make.append(('submission_{}', 'submission_db.yaml'))
-        dbs_to_make.append(('vasp_{}', 'tasks_db.json'))
+
+        if args.type == 'MP' or args.type == 'rubicon':
+            dbs_to_make.append(('snl_{}', 'snl_db.yaml'))
+            dbs_to_make.append(('submission_{}', 'submission_db.yaml'))
+            dbs_to_make.append(('vasp_{}', 'tasks_db.json'))
+        if args.type == 'rubicon':
+            dbs_to_make.append(('nwchem_{}', 'molecules_db.json'))
 
         for d in dbs_to_make:
             creds['NAME'] = d[0].format(ENV_NAME)
