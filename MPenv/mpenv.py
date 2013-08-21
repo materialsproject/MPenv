@@ -12,8 +12,8 @@ __maintainer__ = 'Anubhav Jain'
 __email__ = 'ajain@lbl.gov'
 __date__ = 'Aug 20, 2013'
 
-def create_env():
 
+def create_env():
     root_dir = os.getcwd()
     module_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,8 +27,6 @@ def create_env():
     parser.add_argument('name', help='name of the new environment', default=None)
 
     args = parser.parse_args()
-
-
 
     print module_dir
     c = []
@@ -60,7 +58,6 @@ def create_env():
     c.append(('print', 'UPDATING ENVIRONMENT'))
     c.append(("append", ))
 
-
     try:
         for command in c:
             if isinstance(command, str):
@@ -72,18 +69,28 @@ def create_env():
             elif command[0] == 'activate':
                 execfile(command[1], dict(__file__=command[1]))
             elif command[0] == 'print':
-                print '---'+command[1]
+                print '---' + command[1]
             elif command[0] == 'append':
-                appendtext = ''
+                replacements = {}
+                replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv/bin/activate')
+                replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
+                replacements["NAME"] = args.name
+
                 with open(os.path.join(module_dir, 'BASH_template.txt')) as f:
                     t = CustomTemplate(f.read())
-                    replacements = {}
-                    replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv/bin/activate')
-                    replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
-                    replacements["NAME"] = args.name
                     appendtext = t.substitute(replacements)
-                with open(BASHRC_FILE, 'a') as f:
-                    f.write(appendtext)
+                    with open(BASHRC_FILE, 'a') as f2:
+                        f2.write(appendtext)
+
+                for machine in ['mendel', 'hopper']:
+                    with open(os.path.join(module_dir, 'FW_config.yaml')) as f:
+                        t = CustomTemplate(f.read())
+                        replacements['MACHINE'] = machine
+                        appendtext = t.substitute(replacements)
+                        with open(os.path.join(root_dir, args.name, 'config',
+                                               'config_{}'.format(machine), 'FW_config.yaml'), 'w+') as f2:
+                            f2.write(appendtext)
+
 
             else:
                 raise ValueError("Invalid command! {}".format(command))
@@ -93,6 +100,7 @@ def create_env():
 
 class CustomTemplate(string.Template):
     delimiter = '$$'
+
 
 if __name__ == '__main__':
     create_env()
