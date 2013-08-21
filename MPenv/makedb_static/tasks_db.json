@@ -1,0 +1,11 @@
+{
+    "admin_password": "$PW",
+    "admin_user": "$USER",
+    "aliases_config": null,
+    "collection": "tasks",
+    "database": "$NAME",
+    "host": "$HOST",
+    "port": $PORT,
+    "readonly_password": "$PW",
+    "readonly_user": "$USER"
+}

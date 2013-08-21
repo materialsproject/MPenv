@@ -32,16 +32,22 @@ def create_db():
         db = connection[creds['admin_name']]
         db.authenticate(creds['admin_username'], creds['admin_password'])
 
-        creds['NAME'] = "fw_{}".format(ENV_NAME)
-        connection.drop_database(creds['NAME'])
-        db_fw = connection[creds['NAME']]
-        db_fw.add_user(creds['USER'], creds['PW'], read_only=False)
+        dbs_to_make = [('fw_{}', 'my_launchpad.yaml')]
+        dbs_to_make.append(('snl_{}', 'snl_db.yaml'))
+        dbs_to_make.append(('submission_{}', 'submission_db.yaml'))
+        dbs_to_make.append(('vasp_{}', 'tasks_db.json'))
 
-        with open(os.path.join(static_dir, 'my_launchpad.yaml')) as f2:
-            t = string.Template(f2.read())
-            contents = t.substitute(creds)
-            with open(os.path.join(env_dir, 'my_launchpad.yaml'), 'w+') as f3:
-                f3.write(contents)
+        for d in dbs_to_make:
+            creds['NAME'] = d[0].format(ENV_NAME)
+            connection.drop_database(creds['NAME'])
+            db_temp = connection[creds['NAME']]
+            db_temp.add_user(creds['USER'], creds['PW'], read_only=False)
+
+            with open(os.path.join(static_dir, d[1])) as f2:
+                t = string.Template(f2.read())
+                contents = t.substitute(creds)
+                with open(os.path.join(env_dir, d[1]), 'w+') as f3:
+                    f3.write(contents)
 
 
 def make_password():
