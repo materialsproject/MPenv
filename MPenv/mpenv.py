@@ -16,6 +16,7 @@ __date__ = 'Aug 20, 2013'
 def create_env():
     root_dir = os.getcwd()
     module_dir = os.path.dirname(os.path.abspath(__file__))
+    static_dir = os.path.join(module_dir, 'mpenv_static')
 
     DEV_MODE = True
     BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
@@ -29,7 +30,6 @@ def create_env():
 
     args = parser.parse_args()
 
-    print module_dir
     c = []
     c.append(('print', 'SETTING UP VIRTUALENV'))
     c.append(("mkdir", args.name))
@@ -77,7 +77,7 @@ def create_env():
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                 replacements["NAME"] = args.name
 
-                with open(os.path.join(module_dir, 'BASH_template.txt')) as f:
+                with open(os.path.join(static_dir, 'BASH_template.txt')) as f:
                     t = CustomTemplate(f.read())
                     appendtext = t.substitute(replacements)
                     with open(BASHRC_FILE, 'a') as f2:
@@ -85,21 +85,21 @@ def create_env():
 
                 for machine in MACHINES:
                     replacements['MACHINE'] = machine
-                    with open(os.path.join(module_dir, 'FW_config.yaml')) as f:
+                    with open(os.path.join(static_dir, 'FW_config.yaml')) as f:
                         t = CustomTemplate(f.read())
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
                                                'config_{}'.format(machine), 'FW_config.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
-                    with open(os.path.join(module_dir, 'my_fworker.yaml')) as f:
+                    with open(os.path.join(static_dir, 'my_fworker.yaml')) as f:
                         t = CustomTemplate(f.read())
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
                                                'config_{}'.format(machine), 'my_fworker.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
-                    with open(os.path.join(module_dir, 'qadapter_{}.yaml'.format(machine))) as f:
+                    with open(os.path.join(static_dir, 'qadapter_{}.yaml'.format(machine))) as f:
                         t = CustomTemplate(f.read())
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
