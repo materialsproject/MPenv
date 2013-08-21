@@ -38,9 +38,9 @@ def create_env():
     c.append(('print', 'SETTING UP VIRTUALENV'))
     c.append(("mkdir", args.name))
     c.append(("cd", args.name))
-    c.append(("mkdir", "virtenv"))
-    c.append("virtualenv --no-site-packages virtenv")
-    c.append(("activate", os.path.join(root_dir, args.name, 'virtenv/bin/activate_this.py')))
+    c.append(("mkdir", "virtenv_{}".format(args.name)))
+    c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
+    c.append(("activate", os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate_this.py'.format(args.name))))
 
     c.append(('print', 'INSTALLING FIREWORKS (developer mode)'))
     if not args.dev:
@@ -77,7 +77,7 @@ def create_env():
                 print '---' + command[1]
             elif command[0] == 'append':
                 replacements = {}
-                replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv/bin/activate')
+                replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                 replacements["NAME"] = args.name
 
