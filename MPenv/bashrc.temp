@@ -1,0 +1,105 @@
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->
+# <---MPenv aj
+
+alias use_aj='source /Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/virtenv/bin/activate; export FW_CONFIG_FILE=$FW_CONFIG_aj; export DB_LOC=/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/dbs; echo "You are in environment aj."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_aj='/Users/ajain/Documents/code_matgen/MPenv/MPenv/aj/config/config_hopper/FW_config.yaml'
+fi
+
+# MPenv aj end--->

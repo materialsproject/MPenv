@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
 import os
-from string import Template
 import string
 import subprocess
 import traceback
+from MPenv.mpdbmake import CONFIG_TAG
 
 __author__ = 'Anubhav Jain'
 __copyright__ = 'Copyright 2013, The Materials Project'
@@ -18,7 +18,6 @@ def create_env():
     module_dir = os.path.dirname(os.path.abspath(__file__))
     static_dir = os.path.join(module_dir, 'mpenv_static')
 
-    DEV_MODE = True
     BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
     MACHINES = ('Mendel', 'Hopper')  # note: you must modify BASH_template.txt when adding machines
 
@@ -26,9 +25,14 @@ def create_env():
                     'and testing FireWorks workflows at NERSC'
     parser = ArgumentParser(description=m_description)
 
-    parser.add_argument('name', help='name of the new environment', default=None)
+    parser.add_argument('name', help='directory containing environment files', default=None)
+    parser.add_argument('--dev', help='dev_mode', action='store_true')
 
     args = parser.parse_args()
+
+    print 'VALIDATING DIRECTORY'
+    if not os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')):
+        raise ValueError("Missing file: {}".format(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')))
 
     c = []
     c.append(('print', 'SETTING UP VIRTUALENV'))
@@ -39,7 +43,7 @@ def create_env():
     c.append(("activate", os.path.join(root_dir, args.name, 'virtenv/bin/activate_this.py')))
 
     c.append(('print', 'INSTALLING FIREWORKS (developer mode)'))
-    if not DEV_MODE:
+    if not args.dev:
         c.append(("pip install django"))
         c.append(("mkdir", "codes"))
         c.append(("cd", 'codes'))

@@ -12,6 +12,7 @@ __maintainer__ = 'Anubhav Jain'
 __email__ = 'ajain@lbl.gov'
 __date__ = 'Aug 21, 2013'
 
+CONFIG_TAG = "_files"
 
 def create_db():
 
@@ -23,7 +24,7 @@ def create_db():
 
     args = parser.parse_args()
 
-    if args.type != 'FW' and args.type != 'MP' and args.type!= 'rubicon':
+    if args.type != 'FW' and args.type != 'MP' and args.type != 'rubicon':
         raise ValueError("Invalid type! Choose from FW, MP, rubicon")
 
     module_dir = os.path.dirname(os.path.abspath(__file__))
@@ -31,7 +32,7 @@ def create_db():
 
     ENV_NAME = args.name
     curr_dir = os.getcwd()
-    env_dir = os.path.join(curr_dir, ENV_NAME)
+    env_dir = os.path.join(curr_dir, ENV_NAME+CONFIG_TAG)
     os.makedirs(env_dir)
 
     with open(os.path.join(module_dir, "private", "admin_creds.yaml")) as f:
