@@ -51,7 +51,7 @@ def create_env():
 
     c.append(('print', 'INSTALLING FIREWORKS (developer mode)'))
     if not args.dev:
-        c.append(("pip install django"))
+        # c.append(("pip install django"))  # TODO: ADD THIS BACK!!!
         c.append(("mkdir", "codes"))
         c.append(("cd", 'codes'))
         c.append("git clone git@github.com:materialsproject/fireworks.git")
