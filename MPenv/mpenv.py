@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import os
 from string import Template
+import string
 import subprocess
 import traceback
 
@@ -13,7 +14,11 @@ __date__ = 'Aug 20, 2013'
 
 def create_env():
 
+    root_dir = os.getcwd()
+    module_dir = os.path.dirname(os.path.abspath(__file__))
+
     DEV_MODE = True
+    BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
 
     m_description = 'This program creates a self-contained environment for running ' \
                     'and testing FireWorks workflows at NERSC'
@@ -23,8 +28,7 @@ def create_env():
 
     args = parser.parse_args()
 
-    root_dir = os.getcwd()
-    module_dir = os.path.dirname(os.path.abspath(__file__))
+
 
     print module_dir
     c = []
@@ -44,6 +48,15 @@ def create_env():
         c.append(("cd", 'fireworks'))
         c.append("python setup.py develop")
 
+    c.append(('print', 'ADDING SETTINGS'))
+    c.append(("cd", os.path.join(root_dir, args.name)))
+    c.append(("mkdir", "config"))
+    c.append(("cd", "config"))
+    c.append(("mkdir", "config_mendel"))
+    c.append(("mkdir", "config_hopper"))
+    c.append(("mkdir", "dbs"))
+    c.append(("mkdir", "logs"))
+
     c.append(('print', 'UPDATING ENVIRONMENT'))
     c.append(("append", ))
 
@@ -61,23 +74,25 @@ def create_env():
             elif command[0] == 'print':
                 print '---'+command[1]
             elif command[0] == 'append':
+                appendtext = ''
                 with open(os.path.join(module_dir, 'BASH_template.txt')) as f:
-                    t = Template(f.read())
+                    t = CustomTemplate(f.read())
                     replacements = {}
-                    replacements["COMMAND"] = 'use_{}'.format(args.name)
                     replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv/bin/activate')
-                    replacements["FW_CONFIG"] = ''
-                    replacements["DB_LOC"] = ''
+                    replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                     replacements["NAME"] = args.name
-                    print t.substitute(replacements)
-                #with open(os.path.join(module_dir, 'hello.txt'), 'w+') as f:
-
+                    appendtext = t.substitute(replacements)
+                with open(BASHRC_FILE, 'a') as f:
+                    f.write(appendtext)
 
             else:
                 raise ValueError("Invalid command! {}".format(command))
     except:
         traceback.print_exc()
 
+
+class CustomTemplate(string.Template):
+    delimiter = '$$'
 
 if __name__ == '__main__':
     create_env()

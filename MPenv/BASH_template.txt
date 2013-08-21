@@ -1,1 +1,15 @@
-alias $COMMAND='source $ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG; export DB_LOC=$DB_LOC; echo "You are in environment $NAME."'
+# <---MPenv $$NAME
+
+alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; export DB_LOC=$$CONFIG_LOC/dbs; echo "You are in environment $$NAME."'
+if [ "$NERSC_HOST" == "carver" ]
+then
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_mendel/FW_config.yaml'
+   module swap numpy numpy/1.7.1
+fi
+
+if [ "$NERSC_HOST" == "hopper" ]
+then
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_hopper/FW_config.yaml'
+fi
+
+# MPenv $$NAME end--->
