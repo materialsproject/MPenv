@@ -53,14 +53,26 @@ def create_env():
     c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
     c.append(("activate", os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate_this.py'.format(args.name))))
 
-    c.append(('print', 'INSTALLING FIREWORKS (developer mode)'))
     if not args.dev:
+        c.append(('print', 'INSTALLING FireWorks (developer mode)'))
         c.append(("pip install django"))
         c.append(("mkdir", "codes"))
         c.append(("cd", 'codes'))
         c.append("git clone git@github.com:materialsproject/fireworks.git")
         c.append(("cd", 'fireworks'))
         c.append("python setup.py develop")
+        if envtype == "MP" or envtype == "rubicon":
+            c.append(('print', 'INSTALLING pymatgen (developer mode)'))
+            c.append(("cd", '..'))
+            c.append(("pip install pycifrw"))
+            c.append(("pip install pyhull"))
+            c.append(("pip install pyyaml"))
+            c.append("git clone git@github.com:materialsproject/pymatgen.git")
+            c.append(("cd", 'pymatgen'))
+            c.append("python setup.py develop")
+
+
+
 
     c.append(('print', 'ADDING SETTINGS'))
     c.append(("cd", os.path.join(root_dir, args.name)))
@@ -77,7 +89,7 @@ def create_env():
         c.append(("cp", "submission_db.yaml"))
         c.append(("cp", "tasks_db.json"))
 
-    if envtype == "MP" or envtype == "rubicon":
+    if envtype == "rubicon":
         c.append(("cp", "molecules_db.json"))
 
     c.append(('print', 'UPDATING ENVIRONMENT'))
