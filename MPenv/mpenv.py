@@ -19,6 +19,7 @@ def create_env():
 
     DEV_MODE = True
     BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
+    MACHINES = ['Mendel', 'Hopper']  # note: you must modify BASH_template.txt when adding machines
 
     m_description = 'This program creates a self-contained environment for running ' \
                     'and testing FireWorks workflows at NERSC'
@@ -50,8 +51,8 @@ def create_env():
     c.append(("cd", os.path.join(root_dir, args.name)))
     c.append(("mkdir", "config"))
     c.append(("cd", "config"))
-    c.append(("mkdir", "config_mendel"))
-    c.append(("mkdir", "config_hopper"))
+    for machine in MACHINES:
+        c.append(("mkdir", "config_{}".format(machine)))
     c.append(("mkdir", "dbs"))
     c.append(("mkdir", "logs"))
 
@@ -82,13 +83,20 @@ def create_env():
                     with open(BASHRC_FILE, 'a') as f2:
                         f2.write(appendtext)
 
-                for machine in ['mendel', 'hopper']:
+                for machine in MACHINES:
+                    replacements['MACHINE'] = machine
                     with open(os.path.join(module_dir, 'FW_config.yaml')) as f:
                         t = CustomTemplate(f.read())
-                        replacements['MACHINE'] = machine
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
                                                'config_{}'.format(machine), 'FW_config.yaml'), 'w+') as f2:
+                            f2.write(appendtext)
+
+                    with open(os.path.join(module_dir, 'my_fworker.yaml')) as f:
+                        t = CustomTemplate(f.read())
+                        appendtext = t.substitute(replacements)
+                        with open(os.path.join(root_dir, args.name, 'config',
+                                               'config_{}'.format(machine), 'my_fworker.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
 
