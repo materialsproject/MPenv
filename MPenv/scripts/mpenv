@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+from MPenv.mpenv import create_env
+
+if __name__ == '__main__':
+    create_env()
