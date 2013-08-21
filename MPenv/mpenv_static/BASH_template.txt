@@ -14,4 +14,5 @@ then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
 fi
 
+alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; echo "You are deactivated."'
 # MPenv $$NAME end--->

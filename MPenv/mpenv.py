@@ -79,6 +79,7 @@ def create_env():
                 replacements = {}
                 replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
+                replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')
                 replacements["NAME"] = args.name
 
                 with open(os.path.join(static_dir, 'BASH_template.txt')) as f:
@@ -108,6 +109,13 @@ def create_env():
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
                                                'config_{}'.format(machine), 'my_qadapter.yaml'), 'w+') as f2:
+                            f2.write(appendtext)
+
+                    with open(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')) as f:
+                        t = CustomTemplate(f.read())
+                        appendtext = t.substitute(replacements)
+                        with open(os.path.join(root_dir, args.name, 'config',
+                                               'config_{}'.format(machine), 'my_launchpad.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
 
