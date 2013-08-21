@@ -31,8 +31,15 @@ def create_env():
     args = parser.parse_args()
 
     print 'VALIDATING DIRECTORY'
+    envtype = "FW"
     if not os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')):
         raise ValueError("Missing file: {}".format(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')))
+
+    if os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'tasks_db.json')):
+        envtype = "MP"
+
+    if os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'molecules_db.json')):
+        envtype = "rubicon"
 
     c = []
     c.append(('print', 'SETTING UP VIRTUALENV'))
@@ -81,6 +88,13 @@ def create_env():
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                 replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')
                 replacements["NAME"] = args.name
+
+                if envtype == "FW":
+                    replacements["PACKAGES"] = '[]'
+                elif envtype == "MP" or envtype == "rubicon":
+                    replacements["PACKAGES"] = "\n  - mpworks.firetasks\n  - mpworks.dupefinders"
+                if envtype == "rubicon":
+                    replacements["PACKAGES"] += "\n  - rubicon.firetasks"
 
                 with open(os.path.join(static_dir, 'BASH_template.txt')) as f:
                     t = CustomTemplate(f.read())

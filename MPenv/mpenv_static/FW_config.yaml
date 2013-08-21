@@ -1,7 +1,4 @@
-ADD_USER_PACKAGES:
-  - mpworks.firetasks
-  - mpworks.dupefinders
-  - rubicon.firetasks
+ADD_USER_PACKAGES: $$PACKAGES
 CONFIG_FILE_DIR: $$CONFIG_LOC/config_$$MACHINE
 ECHO_TEST: '$$NAME environment'
 QUEUE_UPDATE_INTERVAL: 5
