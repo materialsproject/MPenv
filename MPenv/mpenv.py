@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import os
+import shutil
 import string
 import subprocess
 import traceback
@@ -14,13 +15,6 @@ __date__ = 'Aug 20, 2013'
 
 
 def create_env():
-    root_dir = os.getcwd()
-    module_dir = os.path.dirname(os.path.abspath(__file__))
-    static_dir = os.path.join(module_dir, 'mpenv_static')
-
-    BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
-    MACHINES = ('Mendel', 'Hopper')  # note: you must modify BASH_template.txt when adding machines
-
     m_description = 'This program creates a self-contained environment for running ' \
                     'and testing FireWorks workflows at NERSC'
     parser = ArgumentParser(description=m_description)
@@ -30,16 +24,26 @@ def create_env():
 
     args = parser.parse_args()
 
+    root_dir = os.getcwd()
+    module_dir = os.path.dirname(os.path.abspath(__file__))
+    static_dir = os.path.join(module_dir, 'mpenv_static')
+    files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
+
+    BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
+    MACHINES = ('Mendel', 'Hopper')  # note: you must modify BASH_template.txt when adding machines
+
     print 'VALIDATING DIRECTORY'
     envtype = "FW"
-    if not os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')):
-        raise ValueError("Missing file: {}".format(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')))
+    if not os.path.exists(os.path.join(files_dir, 'my_launchpad.yaml')):
+        raise ValueError("Missing file: {}".format(files_dir, 'my_launchpad.yaml'))
 
-    if os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'tasks_db.json')):
+    if os.path.exists(os.path.join(files_dir, 'tasks_db.json')):
         envtype = "MP"
 
-    if os.path.exists(os.path.join(root_dir, args.name+CONFIG_TAG, 'molecules_db.json')):
+    if os.path.exists(os.path.join(files_dir, 'molecules_db.json')):
         envtype = "rubicon"
+
+    print 'OK, we are going to install a {} environment'.format(envtype)
 
     c = []
     c.append(('print', 'SETTING UP VIRTUALENV'))
@@ -67,6 +71,15 @@ def create_env():
     c.append(("mkdir", "dbs"))
     c.append(("mkdir", "logs"))
 
+    if envtype == "MP" or envtype == "rubicon":
+        c.append(('print', 'MAKING / MOVING DB files'))
+        c.append(("cp", "snl_db.yaml"))
+        c.append(("cp", "submission_db.yaml"))
+        c.append(("cp", "tasks_db.json"))
+
+    if envtype == "MP" or envtype == "rubicon":
+        c.append(("cp", "molecules_db.json"))
+
     c.append(('print', 'UPDATING ENVIRONMENT'))
     c.append(("append", ))
 
@@ -82,6 +95,8 @@ def create_env():
                 execfile(command[1], dict(__file__=command[1]))
             elif command[0] == 'print':
                 print '---' + command[1]
+            elif command[0] == 'cp':
+                shutil.copyfile(os.path.join(files_dir, command[1]), os.path.join(root_dir, args.name, 'config', 'dbs', command[1]))
             elif command[0] == 'append':
                 replacements = {}
                 replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
@@ -125,7 +140,7 @@ def create_env():
                                                'config_{}'.format(machine), 'my_qadapter.yaml'), 'w+') as f2:
                             f2.write(appendtext)
 
-                    with open(os.path.join(root_dir, args.name+CONFIG_TAG, 'my_launchpad.yaml')) as f:
+                    with open(os.path.join(files_dir, 'my_launchpad.yaml')) as f:
                         t = CustomTemplate(f.read())
                         appendtext = t.substitute(replacements)
                         with open(os.path.join(root_dir, args.name, 'config',
