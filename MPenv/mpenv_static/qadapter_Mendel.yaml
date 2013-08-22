@@ -10,7 +10,6 @@ pre_rocket: |
             #PBS -V
             module load python/2.7.3
             module load vasp/5.2
-            module swap numpy numpy/1.7.1
             module load nwchem
             module load g09
 post_rocket: null
