@@ -64,11 +64,36 @@ def create_env():
         if envtype == "MP" or envtype == "rubicon":
             c.append(('print', 'INSTALLING pymatgen (developer mode)'))
             c.append(("cd", '..'))
-            c.append(("pip install pycifrw"))
+            c.append(("easy_install pycifrw"))
             c.append(("pip install pyhull"))
             c.append(("pip install pyyaml"))
             c.append("git clone git@github.com:materialsproject/pymatgen.git")
             c.append(("cd", 'pymatgen'))
+            c.append("python setup.py develop")
+
+            c.append(('print', 'INSTALLING pymatgen-db (developer mode)'))
+            c.append(("cd", '..'))
+            c.append("git clone git@github.com:materialsproject/pymatgen-db.git")
+            c.append(("cd", 'pymatgen-db'))
+            c.append("python setup.py develop")
+
+            c.append(('print', 'INSTALLING custodian (developer mode)'))
+            c.append(("cd", '..'))
+            c.append("git clone git@github.com:materialsproject/custodian.git")
+            c.append(("cd", 'custodian'))
+            c.append("python setup.py develop")
+
+            c.append(('print', 'INSTALLING MPWorks (developer mode)'))
+            c.append(("cd", '..'))
+            c.append("git clone git@github.com:materialsproject/MPWorks.git")
+            c.append(("cd", 'MPWorks'))
+            c.append("python setup.py develop")
+
+        if envtype == "rubicon":
+            c.append(('print', 'INSTALLING rubicon (developer mode)'))
+            c.append(("cd", '..'))
+            c.append("git clone git@github.com:materialsproject/rubicon.git")
+            c.append(("cd", 'rubicon'))
             c.append("python setup.py develop")
 
 
