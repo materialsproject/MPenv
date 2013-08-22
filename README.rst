@@ -66,6 +66,18 @@ Part 2 - Install at NERSC
 
 #. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
+#. Type::
+
+   source ~/.bashrc.ext
+
+  (or log out and log into NERSC again)
+
+#. Whenever you want to activate your environment, type::
+
+   use_<ENV_NAME>
+
+  e.g., ``use_aj_vasp``.
+
 Part 3 - Customize your environment
 -----------------------------------
 
@@ -79,6 +91,18 @@ There are many things about your environment that you can customize. Here are a 
     export MAPI_KEY=<MAPI_KEY>
 
    where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these.
+
+
+Deleting your environment
+=========================
+
+If you ever want to remove your environment completely (this is different than resetting DBs), you should:
+
+#. Contact an administrator to tear down the DB backends
+
+#. Remove the entire directory containing your environment
+
+#. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section.
 
 Administrator instructions
 ==========================
