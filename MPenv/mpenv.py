@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import os
+from os.path import expanduser
 import shutil
 import string
 import subprocess
@@ -29,7 +30,8 @@ def create_env():
     static_dir = os.path.join(module_dir, 'mpenv_static')
     files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
 
-    BASHRC_FILE = os.path.join(root_dir, "bashrc.temp")
+
+    BASHRC_FILE = os.path.join(expanduser("~"), ".bashrc.ext")
     MACHINES = ('Mendel', 'Hopper')  # note: you must modify BASH_template.txt when adding machines
 
     print 'VALIDATING DIRECTORY'
@@ -96,9 +98,6 @@ def create_env():
             c.append(("cd", 'rubicon'))
             c.append("python setup.py develop")
 
-
-
-
     c.append(('print', 'ADDING SETTINGS'))
     c.append(("cd", os.path.join(root_dir, args.name)))
     c.append(("mkdir", "config"))
@@ -140,6 +139,7 @@ def create_env():
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                 replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')
                 replacements["NAME"] = args.name
+                replacements["OPENBABEL"] = "export PYTHONPATH=/project/projectdirs/jcesr/openbabel/lib:$PYTHONPATH" if envtype=="rubicon" else ""
 
                 if envtype == "FW":
                     replacements["PACKAGES"] = '[]'
