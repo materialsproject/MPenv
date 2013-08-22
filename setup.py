@@ -17,7 +17,7 @@ if __name__ == "__main__":
     setup(name='MPenv',
           version='0.1',
           description='Materials Project environment creation',
-          long_description=open(os.path.join(module_dir, 'README.md')).read(),
+          long_description=open(os.path.join(module_dir, 'README.rst')).read(),
           url='https://github.com/materialsproject/MPenv',
           author='Anubhav Jain',
           author_email='anubhavster@gmail.com',
