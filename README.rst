@@ -93,6 +93,31 @@ There are many things about your environment that you can customize. Here are a 
    where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these.
 
 
+Updating your environment
+=========================
+
+From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). Just follow this procedure:
+
+#. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
+
+#. Remove or backup (move to another name) the entire directory containing your environment. (e.g. ``aj_vasp``). **Make sure you do NOT delete your files directory, e.g. ``aj_vasp_files``**.
+
+#. Activate your admin environment::
+
+    source admin_env/bin/activate
+
+#. Pull admin environment changes::
+
+    cd admin_env/MPenv
+    git pull
+
+#. Go back to your home directory and reinstall the virutalenv::
+
+    cd ~
+    mpenv aj_vasp
+
+   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``WC_surfaces``.
+
 Deleting your environment
 =========================
 
@@ -100,7 +125,7 @@ If you ever want to remove your environment completely (this is different than r
 
 #. Contact an administrator to tear down the DB backends
 
-#. Remove the entire directory containing your environment
+#. Remove the entire directory containing your environment AND your files (e.g. ``aj_vasp`` and ``aj_vasp_files``)
 
 #. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section.
 
