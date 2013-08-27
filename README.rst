@@ -81,9 +81,9 @@ Part 2 - Install at NERSC
 Part 3 - Customize your environment
 -----------------------------------
 
-There are many things about your environment that you can customize. Here are a few.
+There are many things about your environment that you can (and might have to) customize. Here are a few.
 
-#. Go to ``<ENV_NAME>/config/config_Hopper`` where <ENV_NAME> is something like ``aj_vasp``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime and mppwidth you want. You might want to change the queue to "debug" for example in order to test your environment. Do the same thing for ``config_Mendel``. (Note: Carver is not currently supported)
+#. Go to ``<ENV_NAME>/config/config_Hopper`` where <ENV_NAME> is something like ``aj_vasp``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime, mppwidth, and account you want. You might want to change the queue to "debug" for example in order to test your environment. If you are not a member of the ``jcesr`` NERSC repository, either delete the ``account`` field or change to an account that you can charge at NERSC.  Do the same thing for ``config_Mendel``. (Note: Carver is not currently supported)
 
 #. In your ``.bashrc.ext``, you'll want to add two lines::
 
