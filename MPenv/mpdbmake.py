@@ -70,7 +70,7 @@ def create_db():
 
 def make_password():
     length = 8
-    chars = string.ascii_letters + string.digits + '!@#$%^&*()'
+    chars = string.ascii_letters + string.digits
     random.seed = (os.urandom(1024))
 
     return ''.join(random.choice(chars) for i in range(length))
