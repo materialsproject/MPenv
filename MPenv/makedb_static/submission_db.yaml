@@ -1,5 +1,5 @@
 host: $HOST
 port: $PORT
-db: $NAME
-username: $USER
-password: $PW
+db: '$NAME'
+username: '$USER'
+password: '$PW'

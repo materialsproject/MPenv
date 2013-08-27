@@ -1,8 +1,8 @@
 host: $HOST
 port: $PORT
-name: $NAME
-username: $USER
-password: $PW
+name: '$NAME'
+username: '$USER'
+password: '$PW'
 logdir: $$$$LOGDIR
 strm_lvl: DEBUG
 user_indices:
