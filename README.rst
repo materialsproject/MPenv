@@ -43,7 +43,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
    If the installation was successful, the system should find an executable.
 
-#. Request an environment from an administrator (currently Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "WC_surfaces".
+#. Request an environment from an administrator (currently Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
 
 #. An administrator will create a suite of databases hosted at NERSC for you and send you back a directory, lets call this "aj_vasp_files". *Do not rename or change this directory in any way*.
 
@@ -62,7 +62,7 @@ Part 2 - Install at NERSC
 
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``WC_surfaces``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
 
 #. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
@@ -92,11 +92,16 @@ There are many things about your environment that you can (and might have to) cu
 
    where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these.
 
+Part 4 - Modifying code to add workflows
+----------------------------------------
 
-Updating your environment
-=========================
+#. The codes installed with your environment are in ``<ENV_NAME>/codes``. If you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()`` method) they will modify the behavior of your environment.
+#. Use ``git pull`` within each codebase to update that code to the latest version.
 
-From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). Just follow this procedure:
+Updating your environment itself
+================================
+
+From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However, **this will delete any code updates you made to your environment unless they are backed up on git***. Just follow this procedure:
 
 #. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
 
@@ -116,7 +121,7 @@ From time to time MPenv will have new features and you will want to update your 
     cd ~
     mpenv aj_vasp
 
-   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``WC_surfaces``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
 
 Deleting your environment
 =========================
