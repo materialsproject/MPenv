@@ -22,6 +22,7 @@ def create_env():
 
     parser.add_argument('name', help='directory containing environment files', default=None)
     parser.add_argument('--dev', help='dev_mode', action='store_true')
+    parser.add_argument('--pymatpro', help='install pymatpro', action='store_true')
 
     args = parser.parse_args()
 
@@ -91,6 +92,13 @@ def create_env():
             c.append(("cd", 'MPWorks'))
             c.append("python setup.py develop")
 
+        if args.pymatpro:
+            c.append(('print', 'INSTALLING pymatpro (developer mode)'))
+            c.append(("cd", '..'))
+            c.append("git clone git@github.com:materialsproject/pymatpro.git")
+            c.append(("cd", 'pymatpro'))
+            c.append("python setup.py develop")
+
         if envtype == "rubicon":
             c.append(('print', 'INSTALLING rubicon (developer mode)'))
             c.append(("cd", '..'))
@@ -141,7 +149,6 @@ def create_env():
                 replacements["NAME"] = args.name
                 replacements["OPENBABEL"] = "export PYTHONPATH=/project/projectdirs/jcesr/openbabel/lib:$PYTHONPATH" if envtype=="rubicon" else ""
                 replacements["MATERIALSPROJECT"] = "export VASP_PSP_DIR=/project/projectdirs/matgen/POTCARs" if envtype=="MP" else ""
-
 
                 if envtype == "FW":
                     replacements["PACKAGES"] = '[]'

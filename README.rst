@@ -62,7 +62,7 @@ Part 2 - Install at NERSC
 
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
 
 #. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
@@ -128,7 +128,7 @@ When you're ready to begin:
     cd ~
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
 
 Deleting your environment
 =========================
