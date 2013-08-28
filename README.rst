@@ -101,11 +101,18 @@ Part 4 - Modifying code to add workflows
 Updating your environment itself
 ================================
 
-From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However, **this will delete any code updates you made to your environment unless they are backed up on git***. Just follow this procedure:
+From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that:
+
+* this will delete any code updates you made to your environment unless they are backed up on git
+* this will delete any configuration updates you made to your environment (e.g., ``my_qadapter.yaml``)
+
+If you want to retain these changes, copy the files you need to another directory and copy them back after upgrading your environment.
+
+When you're ready to begin:
 
 #. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
 
-#. Remove or backup (move to another name) the entire directory containing your environment. (e.g. ``aj_vasp``). **Make sure you do NOT delete your files directory, e.g. ``aj_vasp_files``**.
+#. Delete the entire directory containing your environment. (e.g. ``aj_vasp``). *Make sure you do NOT delete your files directory, e.g. ``aj_vasp_files``. If you lose this directory contact an admin, they can fix it!*
 
 #. Activate your admin environment::
 
