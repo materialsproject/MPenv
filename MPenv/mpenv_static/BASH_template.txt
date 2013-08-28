@@ -13,5 +13,6 @@ then
 fi
 
 alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; echo "You are deactivated."'
+$$MATERIALSPROJECT
 $$OPENBABEL
 # MPenv $$NAME end--->

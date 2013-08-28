@@ -140,6 +140,8 @@ def create_env():
                 replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')
                 replacements["NAME"] = args.name
                 replacements["OPENBABEL"] = "export PYTHONPATH=/project/projectdirs/jcesr/openbabel/lib:$PYTHONPATH" if envtype=="rubicon" else ""
+                replacements["MATERIALSPROJECT"] = "export VASP_PSP_DIR=/project/projectdirs/matgen/POTCARs" if envtype=="MP" else ""
+
 
                 if envtype == "FW":
                     replacements["PACKAGES"] = '[]'
