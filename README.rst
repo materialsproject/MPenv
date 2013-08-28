@@ -127,8 +127,11 @@ When you're ready to begin:
 
     cd ~
     mpenv aj_vasp
+    source ~/.bashrc.ext
 
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+
+#. Finally, remember to go back and make any configuration or code changes you need!
 
 Deleting your environment
 =========================

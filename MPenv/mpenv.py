@@ -126,6 +126,7 @@ def create_env():
 
     c.append(('print', 'UPDATING ENVIRONMENT'))
     c.append(("append", ))
+    c.append(('print', 'MPenv is done!'))
 
     try:
         for command in c:
