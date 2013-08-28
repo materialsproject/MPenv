@@ -7,9 +7,7 @@ queue: matgen_reg
 account: matcomp
 job_name: null
 pre_rocket: |
-            #PBS -v DB_LOC
-            #PBS -v FW_CONFIG_FILE
-            #PBS -v VENV_LOC
+            #PBS -v DB_LOC,FW_CONFIG_FILE,VENV_LOC
             module load python/2.7.3
             module load vasp/5.2.matgen
             source $VENV_LOC

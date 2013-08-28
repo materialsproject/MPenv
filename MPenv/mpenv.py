@@ -1,3 +1,5 @@
+
+
 from argparse import ArgumentParser
 import os
 from os.path import expanduser
@@ -146,6 +148,7 @@ def create_env():
                 replacements = {}
                 replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
+                replacements["ENV_LOC"] = os.path.join(root_dir, args.name)
                 replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')
                 replacements["NAME"] = args.name
                 replacements["OPENBABEL"] = "export PYTHONPATH=/project/projectdirs/jcesr/openbabel/lib:$PYTHONPATH" if envtype=="rubicon" else ""
