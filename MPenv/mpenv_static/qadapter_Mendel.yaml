@@ -7,10 +7,12 @@ queue: matgen_reg
 account: matcomp
 job_name: null
 pre_rocket: |
-            #PBS -V
+            #PBS -v DB_LOC
+            #PBS -v FW_CONFIG_FILE
+            #PBS -v VENV_LOC
             module load python/2.7.3
-            module load vasp/5.2
-            module load nwchem
-            module load g09
+            module load vasp/5.2.matgen
+            source $VENV_LOC
+
 post_rocket: null
 logdir: $$CONFIG_LOC/logs

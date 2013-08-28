@@ -1,7 +1,7 @@
 # <---MPenv $$NAME
 module load python/2.7.3
 
-alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; export DB_LOC=$$CONFIG_LOC/dbs; echo "You are in environment $$NAME."'
+alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; export DB_LOC=$$CONFIG_LOC/dbs; export VENV_LOC=$$CONFIG_LOC/virtenv_$$NAME/bin/activate; echo "You are in environment $$NAME."'
 if [ "$NERSC_HOST" == "carver" ]
 then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
@@ -12,7 +12,7 @@ then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
 fi
 
-alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; echo "You are deactivated."'
+alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; export VENV_LOC=""; echo "You are deactivated."'
 $$MATERIALSPROJECT
 $$OPENBABEL
 # MPenv $$NAME end--->
