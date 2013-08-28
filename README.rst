@@ -90,7 +90,7 @@ There are many things about your environment that you can (and might have to) cu
     export VASP_PSP_DIR=<PATH_TO_POTCARS>
     export MAPI_KEY=<MAPI_KEY>
 
-   where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these.
+   where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these. Note that members of the ``matgen`` group at NERSC should be able to set their <PATH_TO_POTCARS> as ``/project/projectdirs/matgen/POTCARs``.
 
 Part 4 - Modifying code to add workflows
 ----------------------------------------
