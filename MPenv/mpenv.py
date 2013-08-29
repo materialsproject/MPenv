@@ -25,6 +25,7 @@ def create_env():
     parser.add_argument('name', help='directory containing environment files', default=None)
     parser.add_argument('--dev', help='dev_mode', action='store_true')
     parser.add_argument('--pymatpro', help='install pymatpro', action='store_true')
+    parser.add_argument('--alternate_pycifrw', help='easy_install pycifrw instead of pip', action='store_true')
 
     args = parser.parse_args()
 
@@ -69,7 +70,10 @@ def create_env():
         if envtype == "MP" or envtype == "rubicon":
             c.append(('print', 'INSTALLING pymatgen (developer mode)'))
             c.append(("cd", '..'))
-            c.append(("easy_install pycifrw"))
+            if args.alternate_pycifrw:
+                c.append(("easy_install pycifrw"))
+            else:
+                c.append(("pip install pycifrw"))
             c.append(("pip install pyhull"))
             c.append(("pip install pyyaml"))
             c.append("git clone git@github.com:materialsproject/pymatgen.git")

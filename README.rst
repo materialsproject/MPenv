@@ -62,7 +62,7 @@ Part 2 - Install at NERSC
 
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
 
 #. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
@@ -99,6 +99,7 @@ Part 4 - Modifying code to add workflows
 
 #. The codes installed with your environment are in ``<ENV_NAME>/codes``. If you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()`` method) they will modify the behavior of your environment.
 #. Use ``git pull`` within each codebase to update that code to the latest version.
+#. Use the ``update_codes`` command to pull the latest changes from all codes. **Be careful!** If there is a merge conflict or other problem, the script won't tell you; you need to monitor the output to make sure the pull completed OK.
 
 Updating your environment itself
 ================================
@@ -131,7 +132,7 @@ When you're ready to begin:
     mpenv aj_vasp
     source ~/.bashrc.ext
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
 
 #. Finally, remember to go back and make any configuration or code changes you need!
 
