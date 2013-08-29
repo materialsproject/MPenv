@@ -151,7 +151,7 @@ def create_env():
             elif command[0] == 'cp':
                 shutil.copyfile(os.path.join(files_dir, command[1]), os.path.join(root_dir, args.name, 'config', 'dbs', command[1]))
             elif command[0] == 'cp_script':
-                shutil.copyfile(os.path.join(files_dir, command[1]), os.path.join(root_dir, args.name, 'config', 'scripts', command[1]))
+                shutil.copyfile(os.path.join(static_dir, command[1]), os.path.join(root_dir, args.name, 'config', 'scripts', command[1]))
             elif command[0] == 'append':
                 replacements = {}
                 replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
