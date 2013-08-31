@@ -62,7 +62,6 @@ def create_env():
     if not args.dev:
         c.append(('print', 'INSTALLING FireWorks (developer mode)'))
         c.append(("pip install django"))
-        c.append(("pip install paramiko"))
         c.append(("mkdir", "codes"))
         c.append(("cd", 'codes'))
         c.append("git clone git@github.com:materialsproject/fireworks.git")
