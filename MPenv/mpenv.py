@@ -7,7 +7,6 @@ import shutil
 import string
 import subprocess
 import traceback
-from MPenv.mpdbmake import CONFIG_TAG
 
 __author__ = 'Anubhav Jain'
 __copyright__ = 'Copyright 2013, The Materials Project'
@@ -16,6 +15,7 @@ __maintainer__ = 'Anubhav Jain'
 __email__ = 'ajain@lbl.gov'
 __date__ = 'Aug 20, 2013'
 
+CONFIG_TAG = "_files"
 
 def create_env():
     m_description = 'This program creates a self-contained environment for running ' \

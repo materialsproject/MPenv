@@ -4,6 +4,7 @@ import random
 import string
 from pymongo import MongoClient
 import yaml
+from MPenv.mpenv import CONFIG_TAG
 from mpworks.snl_utils.snl_mongo import SNLMongoAdapter
 from mpworks.submission.submission_mongo import SubmissionMongoAdapter
 
@@ -13,8 +14,6 @@ __version__ = '0.1'
 __maintainer__ = 'Anubhav Jain'
 __email__ = 'ajain@lbl.gov'
 __date__ = 'Aug 21, 2013'
-
-CONFIG_TAG = "_files"
 
 def create_db():
 
