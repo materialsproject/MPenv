@@ -35,7 +35,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     python setup.py develop
 
 
-   ..note:: If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
+  .. note:: If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
 
 #. Type::
 
@@ -62,7 +62,7 @@ Part 2 - Install at NERSC
 
     mpenv aj_vasp
 
-   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
 
 #. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name. Again, you should use ``--alternate_pycifrw`` if you got an error on the pycifrw installation step.
 
