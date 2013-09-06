@@ -72,11 +72,17 @@ Part 2 - Install at NERSC
 
   (or log out and log into NERSC again)
 
-#. Whenever you want to activate your environment, type::
+#. Activate your environment by typing::
 
    use_<ENV_NAME>
 
   e.g., ``use_aj_vasp``.
+
+#. Reset your databases by typing::
+
+    go_testing --clear -n 'reset'
+
+If all this goes OK, your environment should be installed!
 
 Part 3 - Customize your environment
 -----------------------------------
