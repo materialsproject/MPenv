@@ -13,7 +13,7 @@ Warnings
 
 #. This only works on NERSC
 
-#. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH.
+#. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells.
 
 #. After creating your environment, you can't move or rename it. If you need to delete it see the instructions below.
 
