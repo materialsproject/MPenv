@@ -25,7 +25,6 @@ def create_env():
     parser.add_argument('name', help='directory containing environment files', default=None)
     parser.add_argument('--dev', help='dev_mode', action='store_true')
     parser.add_argument('--pymatpro', help='install pymatpro', action='store_true')
-    parser.add_argument('--alternate_pycifrw', help='easy_install pycifrw instead of pip', action='store_true')
 
     args = parser.parse_args()
 
@@ -69,12 +68,9 @@ def create_env():
         if envtype == "MP" or envtype == "rubicon":
             c.append(('print', 'INSTALLING pymatgen (developer mode)'))
             c.append(("cd", '..'))
-            if args.alternate_pycifrw:
-                c.append(("easy_install pycifrw"))
-            else:
-                c.append(("pip install pycifrw"))
-            c.append(("pip install pyhull"))
-            c.append(("pip install pyyaml"))
+            c.append("pip install pycifrw")
+            c.append("pip install pyhull")
+            c.append("pip install pyyaml")
             c.append("git clone git@github.com:materialsproject/pymatgen.git")
             c.append(("cd", 'pymatgen'))
             c.append("python setup.py develop")
@@ -138,7 +134,16 @@ def create_env():
     try:
         for command in c:
             if isinstance(command, str):
-                subprocess.check_call(command, shell=True, executable="/bin/bash")
+                try:
+                    subprocess.check_call(command, shell=True, executable="/bin/bash")
+                except:
+                    if 'pip install' in command:
+                        easy_command = 'easy_install ' + command.split(' ')[-1]
+                        subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
+                    else:
+                        traceback.print_exc()
+                        raise ValueError('Error executing command')
+
             elif command[0] == 'mkdir':
                 os.mkdir(command[1])
             elif command[0] == 'cd':
