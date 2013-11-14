@@ -169,7 +169,7 @@ def create_env():
                 if envtype == "FW":
                     replacements["PACKAGES"] = '[]'
                 elif envtype == "MP" or envtype == "rubicon":
-                    replacements["PACKAGES"] = "\n  - mpworks.firetasks\n  - mpworks.dupefinders"
+                    replacements["PACKAGES"] = "\n  - mpworks.firetasks\n  - mpworks.dupefinders\n  - mpworks.examples"
                 if envtype == "rubicon":
                     replacements["PACKAGES"] += "\n  - rubicon.firetasks"
 
