@@ -52,7 +52,7 @@ def create_db():
             dbs_to_make.append(('submission_{}', 'submission_db.yaml'))
             dbs_to_make.append(('vasp_{}', 'tasks_db.json'))
         if args.type == 'rubicon':
-            dbs_to_make.append(('nwchem_{}', 'molecules_db.json'))
+            dbs_to_make.append(('qchem_{}', 'molecules_db.json'))
 
         for d in dbs_to_make:
             creds['NAME'] = d[0].format(ENV_NAME)
