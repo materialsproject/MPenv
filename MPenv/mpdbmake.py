@@ -5,8 +5,6 @@ import string
 from pymongo import MongoClient
 import yaml
 from MPenv.mpenv import CONFIG_TAG
-from mpworks.snl_utils.snl_mongo import SNLMongoAdapter
-from mpworks.submission.submission_mongo import SubmissionMongoAdapter
 
 __author__ = 'Anubhav Jain'
 __copyright__ = 'Copyright 2013, The Materials Project'
@@ -67,14 +65,6 @@ def create_db():
                 contents = t.substitute(creds)
                 with open(os.path.join(env_dir, d[1]), 'w+') as f3:
                     f3.write(contents)
-
-            # reset databases automatically
-            if d[1] == 'snl_db.yaml':
-                SNLMongoAdapter.from_file(os.path.join(static_dir, d[1]))._reset()
-
-            elif d[1] == 'submission_db.yaml':
-                SubmissionMongoAdapter.from_file(os.path.join(static_dir, d[1]))._reset()
-
 
 def make_password():
     length = 8
