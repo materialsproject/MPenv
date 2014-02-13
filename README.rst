@@ -127,7 +127,7 @@ When you're ready to begin:
 
 3. Activate your admin environment::
 
-    module load python/2.7.3
+    module load python/2.7.5
     module load virtualenv
     source admin_env/bin/activate
 
