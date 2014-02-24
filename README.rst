@@ -24,7 +24,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
 2. Type::
 
-    module load python/2.7.5
+    module load python/2.7.3
     module load virtualenv
     mkdir admin_env
     virtualenv --no-site-packages admin_env
@@ -127,7 +127,7 @@ When you're ready to begin:
 
 3. Activate your admin environment::
 
-    module load python/2.7.5
+    module load python/2.7.3
     module load virtualenv
     source admin_env/bin/activate
 
