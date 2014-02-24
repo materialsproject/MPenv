@@ -20,7 +20,7 @@ Warnings
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log onto ANY NERSC machine, e.g. Hopper or Carver. At this stage it doesn't matter which one. Let's pick Hopper.
+1. Log into Hopper. In theory, Carver should also work, but recent changes at NERSC have caused strange SSL errors in the past so Hopper is probably a better bet.
 
 2. Type::
 
