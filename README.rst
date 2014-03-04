@@ -112,7 +112,7 @@ Part 4 - Modifying code to add workflows
 Getting started with MPenv
 ==========================
 
-.. note:: This applies to Materials Project environments and to a certain extent, rubicon environments.
+  .. note:: This applies to Materials Project environments and to a certain extent, rubicon environments.
 
 Part 1 - The basics
 -------------------
@@ -148,13 +148,13 @@ You can run test workflows by the following procedure. This test follows the **s
 
 4. The command above clears all your databases AND submits ~40 test compounds to your **submissions** database. If you want, you can at this point try connecting to your **submissions** database (e.g. via MongoHub) and confirm that you see compounds there.
 
-5. Items in the submissions cannot be run directly. They must first be converted into FireWorks. Type the command::
+5. Items in the **submissions** database cannot be run directly. They must first be converted into FireWorks that state the actual calculations we want to perform. Type the command::
 
     go_submissions
 
 6. You will see output saying that you have new workflows. This command *automatically* turned the ~40 test compounds into workflows into the **FireWorks** database. Whenever you type this command, all new submissions are turned into workflows that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there.
 
-7. Let's run our FireWorks by navigating to a scratch directory and using the ``qlaunch``` command of FireWorks::
+7. Let's run our FireWorks by navigating to a scratch directory and using the ``qlaunch`` command of FireWorks::
 
     cd $GSCRATCH2
     mkdir first_tests
@@ -163,11 +163,11 @@ You can run test workflows by the following procedure. This test follows the **s
 
 8. This should have submitted some jobs to the queues at NERSC. You should keep the qlaunch command running (or run it periodically) so that as workflow steps complete, new jobs can be submitted.
 
-9. You can check progress of your workflows using the built-in FireWorks monitoring tools. Several such tools, including a web gui, are documented in the FW docs. Here is a simple command you can use for basic checking::
+9. You can check progress of your workflows using the built-in FireWorks monitoring tools. Several such tools, including a web gui, are documented in the FW docs. If you want to be efficient, you will actually look this up (as well as how to rerun jobs, detect failures, etc.). Here is a simple command you can use for basic checking::
 
     lpad get_wfs -d more
 
-10. When your workflows complete, you should see the results in the **VASP** database (e.g. connect via MongoHub).
+10. When your workflows complete, you should see the results in the **VASP** database (e.g. connect via MongoHub or via pymatgen-db frontend).
 
 Part 3 - Running custom structures
 ----------------------------------
@@ -199,7 +199,7 @@ You can run custom structures through the typical MP workflow very easily. You n
 
 3. Once all your structures are submitted, follow steps 5-10 in the previous part to run it.
 
-4. There are many advanced options for setting priority, basic WF tailoring, auto-setting the submission database based on environment, etc. Consult someone for help if you need this.
+4. There are many advanced options for setting priority, basic WF tailoring, auto-setting the submission database based on environment, etc. Consult the email list if you need help with a specific problem.
 
 Part 4 - Running custom workflows
 ---------------------------------
