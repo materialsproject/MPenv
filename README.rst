@@ -123,11 +123,11 @@ There are 4(!) main databases that interact within MPenv. You have credentials f
 
 2. The 2nd most important database is the **VASP** database. This contains the results of your calculations
 
-3. There is also a **submissions** database where you can submit Structure objects (actually SNL objects) for computation. Using this database is certainly optional but (as demonstrated later) can be simpler than trying to create FireWorks directly.
+3. There is also a **submissions** database where you can submit Structure objects (actually SNL objects) for computation. Using this database is optional but (as demonstrated later) can be simpler than trying to create FireWorks directly.
 
 4. Finally, there is an **SNL** database that contains all the structures you've submitted and relaxed. It is used for duplicate checking as well as record-keeping. Generally speaking, you do not need to do worry that this database exists.
 
-One type of MPenv procedure is to submit Structures to the **submissions** database, then use automated routines to convert those Structures to FireWorks workflows and run them. The results are checked via the **VASP** database. Thus your interaction is with **submissions** and **VASP** databases.
+One type of MPenv procedure is to submit Structures to the **submissions** database, then use **automated** routines to convert those Structures to **FireWorks** workflows and run them. The results are checked via the **VASP** database. The order of operations is  **submissions** -> **FireWorks** --> **VASP**, but your interaction is only with **submissions** and **VASP** databases.
 
 Another type of MPenv procedure is to dispense with submissions database and instead submit workflows directly to the **FireWorks** database. In this case, your interaction is with **FireWorks** and **VASP** databases.
 
@@ -172,7 +172,7 @@ You can run test workflows by the following procedure. This test follows the **s
 Part 3 - Running custom structures
 ----------------------------------
 
-You can run custom structures through the typical MP workflow very easily. You need to submit your Structures (as StructureNL objects) to your **submissions** database. Then simply use the same procedure as last time to convert those into FireWorks and run them.
+You can run custom structures through the typical MP workflow very easily. You need to submit your Structures (as StructureNL objects) to your **submissions** database. Then simply use the same procedure as last time to convert those into FireWorks and run them (we are still following the **submissions** -> **FireWorks** --> **VASP** paradigm).
 
 1. If you want, you can clear all your databases via::
 
@@ -204,9 +204,9 @@ You can run custom structures through the typical MP workflow very easily. You n
 Part 4 - Running custom workflows
 ---------------------------------
 
-Part 3 was about running custom *structures* through a typical MP workflow. If you want to run custom workflows (new types of calculations not coded in MP), you have a couple of options. You can either learn a bit more about MPWorks and try to code your workflow so that it can be run as in Part 3, but submitted with certain parameters (e.g., ``sma.submit_snl(snl, 'my_email@gmail.com', parameters={"calculation_type":"CUSTOM_STUFF"})``). This requires modifying the code that turns StructureNL into Workflows.
+Part 3 was about running custom *structures* through a typical MP workflow. If you want to run custom workflows (new types of calculations not coded in MP), you have a couple of options. You can either learn a bit more about MPWorks and try to code your workflow so that it can be run as in Part 3, but submitted with certain parameters (e.g., ``sma.submit_snl(snl, 'my_email@gmail.com', parameters={"calculation_type":"CUSTOM_STUFF"})``). This requires modifying the code that turns StructureNL into Workflows. In this case you are still following the **submissions** -> **FireWorks** --> **VASP** paradigm.
 
-The alternate strategy is to create Workflow objects directly and put them in the **FireWorks** database, bypassing the submissions database entirely. Once the Workflow objects are in the **FireWorks** database, you can run them by following steps 7-10 in Part 2 of this guide (i.e., basically you just need to run the ``qlaunch`` command.
+The alternate strategy is to create Workflow objects directly and put them in the **FireWorks** database, bypassing the submissions database entirely. Then you are just doing  **FireWorks** --> **VASP**. Once the Workflow objects are in the **FireWorks** database, you can run them by following steps 7-10 in Part 2 of this guide (i.e., basically you just need to run the ``qlaunch`` command.
 
 One code in development to create basic workflows that can run VASP is the **fireworks-vasp** repository (https://github.com/materialsvirtuallab/fireworks-vasp). This code can create Workflow objects that you can directly enter into your FireWorks database (the credentials for your FW database is in the ``my_launchpad.yaml`` given to you by the MPenv admin). This is not the code used by Materials Project for running workflows (MPWorks does that), but is considerably simpler to understand and modify for your needs. You can probably get started with custom workflows much more quickly with this strategy.
 
