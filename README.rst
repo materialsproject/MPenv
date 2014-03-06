@@ -178,13 +178,13 @@ You can run custom structures through the typical MP workflow very easily. You n
 
     go_testing --clear -n 'no_submissions'
 
-2. Here is some code you can use to submit a custom Structure to the **submissions** database (you will need to copy your ``submission.yaml`` file to the location you run this code, and also have set up your MPRester API key)::
+2. Here is some code you can use to submit a custom Structure to the **submissions** database (you will need to copy your ``<ENV_NAME>/configs/db/submission_db.yaml`` file to the location you run this code, and also have set up your MPRester API key if you want to grab a structure from Materials Project as in this example)::
 
     from mpworks.submission.submission_mongo import SubmissionMongoAdapter
     from pymatgen import MPRester
     from pymatgen.matproj.snl import StructureNL
 
-    submissions_file = 'submission.yaml'
+    submissions_file = 'submission_db.yaml'
     sma = SubmissionMongoAdapter.from_file(submissions_file)
 
     # get a Structure object
