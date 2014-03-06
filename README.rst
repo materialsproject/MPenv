@@ -152,7 +152,7 @@ You can run test workflows by the following procedure. This test follows the **s
 
     go_submissions
 
-6. You will see output saying that you have new workflows. This command *automatically* turned the ~40 test compounds into workflows into the **FireWorks** database. Whenever you type this command, all new submissions are turned into workflows that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there.
+6. You will see output saying that you have new workflows. This command *automatically* turned the new submissions into workflows in the **FireWorks** database that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there. Or you can type ``lpad get_wfs -d less`` as another option to see what's in the FireWorks database.
 
 7. Let's run our FireWorks by navigating to a scratch directory and using the ``qlaunch`` command of FireWorks::
 
