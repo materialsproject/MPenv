@@ -127,7 +127,7 @@ There are 4(!) main databases that interact within MPenv. You have credentials f
 
 4. Finally, there is an **SNL** database that contains all the structures you've submitted and relaxed. It is used for duplicate checking as well as record-keeping. Generally speaking, you do not need to do worry that this database exists.
 
-One type of MPenv procedure is to submit Structures to the **submissions** database, then use **automated** routines to convert those Structures to **FireWorks** workflows and run them. The results are checked via the **VASP** database. The order of operations is  **submissions** -> **FireWorks** --> **VASP**, but your interaction is only with **submissions** and **VASP** databases.
+One type of MPenv procedure is to submit Structures to the **submissions** database, then use an *automated* command to convert those submissions into **FireWorks** workflows and run them. The results are checked via the **VASP** database. The order of operations is  **submissions** -> **FireWorks** --> **VASP**, but your interaction is only with **submissions** and **VASP** databases.
 
 Another type of MPenv procedure is to dispense with submissions database and instead submit workflows directly to the **FireWorks** database. In this case, your interaction is with **FireWorks** and **VASP** databases.
 
