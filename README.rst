@@ -54,7 +54,7 @@ Part 2 - Install at NERSC
 
 1. Upload the entire files directory you received from an admin (e.g., *aj_vasp_files*) to your home directory at NERSC. Remember to not change this directory!
 
-2. Log onto a NERSC machine (e.g. Hopper) and enter the admin environment that allows you to use MPenv::
+2. Log onto Hopper and enter the admin environment that allows you to use MPenv::
 
     source admin_env/bin/activate
 
