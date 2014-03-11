@@ -103,6 +103,8 @@ There are many things about your environment that you can (and might have to) cu
 Part 4 - Modifying code to add workflows
 ----------------------------------------
 
+.. note:: Currently this only seems to work on Hopper due to strange NERSC updates messing with SSL certs.
+
 1. The codes installed with your environment are in ``<ENV_NAME>/codes``. If you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()`` method) they will modify the behavior of your environment.
 
 2. Use ``git pull`` within each codebase to update that code to the latest version.
