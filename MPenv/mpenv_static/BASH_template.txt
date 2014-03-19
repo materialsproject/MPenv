@@ -5,6 +5,10 @@ alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; ex
 
 alias update_codes='python $SCRIPT_LOC/update_codes.py'
 
+# Load Boltztrap
+export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.3/src
+module load mkl/10.2
+
 if [ "$NERSC_HOST" == "carver" ]
 then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
