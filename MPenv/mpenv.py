@@ -138,8 +138,12 @@ def create_env():
                     subprocess.check_call(command, shell=True, executable="/bin/bash")
                 except:
                     if 'pip install' in command:
-                        easy_command = 'easy_install ' + command.split(' ')[-1]
-                        subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
+                        try:
+                            easy_command = 'easy_install ' + command.split(' ')[-1]
+                            subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
+                        except:
+                            pycifrw_command = 'pip_install --allow-unverified pycifrw ' + command.split(' ')[-1]
+                            subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
                     else:
                         traceback.print_exc()
                         raise ValueError('Error executing command')
