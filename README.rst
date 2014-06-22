@@ -119,7 +119,7 @@ Getting started with MPenv
 Part 1 - The basics
 -------------------
 
-There are 4(!) main databases that interact within MPenv. You have credentials for these 4 databases in the MPenv files sent to you by the MPenv admin (probably Anubhav). As a first step, you might set up a connection to these database via MongoHub (or similar) so you can easily check the contents of these databases.
+There are 4(!) main databases that interact within MPenv. You have credentials for these 4 databases in the MPenv files sent to you by the MPenv admin (probably Anubhav). As a first step, you might set up a connection to these database via MongoHub (or similar) so you can easily check the contents of these databases. If you do not have a Mac, you cannot use Mongohub to check database contents, but you can either (i) skip monitoring databases directly and just use the tools built into FireWorks and other packages or (ii) use another program or just the MongoDB command line tools. You can read "The Little MongoDB book" (available for free online) to see how to use the MongoDB command line as one alternative. Mongohub is **not** by any means a requirement.
 
 1. The most important database is the **FireWorks** database. This contains all the workflows that you want to run.
 
