@@ -16,6 +16,7 @@ fi
 if [ "$NERSC_HOST" == "hopper" ]
 then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
+   $$PACKMOL
 fi
 
 alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; export VENV_LOC=""; export SCRIPT_LOC=""; echo "You are deactivated."'
