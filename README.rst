@@ -25,6 +25,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 2. Type::
 
     module load python/2.7.3
+    module swap numpy numpy/1.8.2
     module load virtualenv/1.8.2
     mkdir admin_env
     virtualenv --no-site-packages admin_env
@@ -57,6 +58,7 @@ Part 2 - Install at NERSC
 2. Log onto Hopper and enter the admin environment that allows you to use MPenv::
 
     module load python/2.7.3
+    module swap numpy numpy/1.8.2
     source admin_env/bin/activate
 
 3. Now, you can install your environment. Staying in your home directory, type::
@@ -155,7 +157,7 @@ You can run test workflows by the following procedure. This test follows the **s
 
     go_submissions
 
-6. You will see output saying that you have new workflows. This command *automatically* turned the new submissions into workflows in the **FireWorks** database that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there. Or you can type ``lpad get_wfs -d less`` as another option to see what's in the FireWorks database.
+6. You will see output saying that you have new workflows. This command *automatically* turned the new submissions into workflows in the **FireWorks** database that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there. Or you can type ``lpad get_wflows -d less`` as another option to see what's in the FireWorks database.
 
 7. Let's run our FireWorks by navigating to a scratch directory and using the ``qlaunch`` command of FireWorks::
 
@@ -168,7 +170,7 @@ You can run test workflows by the following procedure. This test follows the **s
 
 9. You can check progress of your workflows using the built-in FireWorks monitoring tools. Several such tools, including a web gui, are documented in the FW docs. If you want to be efficient, you will actually look this up (as well as how to rerun jobs, detect failures, etc.). Here is a simple command you can use for basic checking::
 
-    lpad get_wfs -d more
+    lpad get_wflows -d more
 
 10. When your workflows complete, you should see the results in the **VASP** database (e.g. connect via MongoHub or via pymatgen-db frontend).
 
@@ -232,6 +234,7 @@ When you're ready to begin:
 3. Activate your admin environment::
 
     module load python/2.7.3
+    module swap numpy numpy/1.8.2
     module load virtualenv
     source admin_env/bin/activate
 

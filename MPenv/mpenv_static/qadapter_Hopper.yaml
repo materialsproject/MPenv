@@ -9,6 +9,7 @@ job_name: null
 pre_rocket: |
             #PBS -v DB_LOC,FW_CONFIG_FILE,VENV_LOC
             module load python/2.7.3
+            module swap numpy numpy/1.8.2
             module load vasp/5.2
             module load nwchem/6.3
             module load g09
