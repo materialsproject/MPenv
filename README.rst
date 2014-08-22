@@ -27,6 +27,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load python/2.7.3
     module swap numpy numpy/1.8.2
     module load virtualenv/1.8.2
+    module load virtualenvwrapper
     mkdir admin_env
     virtualenv --no-site-packages admin_env
     source admin_env/bin/activate
@@ -218,7 +219,7 @@ One code in development to create basic workflows that can run VASP is the **fir
 Updating your environment itself
 ================================
 
-From time to time MPenv will have new features and you will want to update your environment. You can do so without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that:
+From time to time MPenv will have new features and you will want to update your environment. This is different than updating the codes itself - it is updating the code that *installs* the high-throughput codes. You can update MPenv without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that:
 
 * this will delete any code updates you made to your environment unless they are backed up on git
 * this will delete any configuration updates you made to your environment (e.g., ``my_qadapter.yaml``)
@@ -235,7 +236,8 @@ When you're ready to begin:
 
     module load python/2.7.3
     module swap numpy numpy/1.8.2
-    module load virtualenv
+    module load virtualenv/1.8.2
+    module load virtualenvwrapper
     source admin_env/bin/activate
 
 4. Pull admin environment changes::
