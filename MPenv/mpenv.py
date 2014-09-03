@@ -39,6 +39,9 @@ def create_env():
 
     print 'VALIDATING DIRECTORY'
     envtype = "FW"
+    if not os.path.exists(files_dir):
+        raise ValueError("Files directory: {} does not exist! Please make sure you are typing the ENVIRONMENT name and not the directory name.".format(files_dir))
+
     if not os.path.exists(os.path.join(files_dir, 'my_launchpad.yaml')):
         raise ValueError("Missing file: {}".format(files_dir, 'my_launchpad.yaml'))
 
@@ -68,7 +71,7 @@ def create_env():
         if envtype == "MP" or envtype == "rubicon":
             c.append(('print', 'INSTALLING pymatgen (developer mode)'))
             c.append(("cd", '..'))
-            c.append("pip install pycifrw")
+            c.append("pip install pycifrw==3.6.2")
             c.append("pip install pyhull")
             c.append("pip install pyyaml")
             c.append("git clone git@github.com:materialsproject/pymatgen.git")
@@ -138,24 +141,11 @@ def create_env():
                     subprocess.check_call(command, shell=True, executable="/bin/bash")
                 except:
                     if 'pip install' in command:
-                        try:
-                            easy_command = 'easy_install ' + command.split(' ')[-1]
-                            subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
-                        except:
-                            try:
-                                pycifrw_command = 'pip install --allow-unverified pycifrw ' + command.split(' ')[-1]
-                                subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
-                            except:
-                                try:
-                                    subprocess.check_call('pip install pycifrw==3.6.2', shell=True, executable="/bin/bash")
-                                except:
-                                    # manually install pycifrw first
-                                    subprocess.check_call("easy_install --index-url https://pypi.python.org/pypi/PyCifRW/3.6.2 pycifrw", shell=True, executable="/bin/bash")
-                                    subprocess.check_call(command, shell=True, executable="/bin/bash")
+                        easy_command = 'easy_install ' + command.split(' ')[-1]
+                        subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
                     else:
                         traceback.print_exc()
                         raise ValueError('Error executing command')
-
 
             elif command[0] == 'mkdir':
                 os.mkdir(command[1])
