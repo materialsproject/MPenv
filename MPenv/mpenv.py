@@ -147,11 +147,10 @@ def create_env():
                                 subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
                             except:
                                 try:
-                                    pycifrw_command = 'pip install pycifrw==3.6.2'
-                                    subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
+                                    subprocess.check_call('pip install pycifrw==3.6.2', shell=True, executable="/bin/bash")
                                 except:
                                     # manually install pycifrw first
-                                    subprocess.check_call("easy_install --index-url https://pypi.python.org/pypi/PyCifRW/3.5 pycifrw", shell=True, executable="/bin/bash")
+                                    subprocess.check_call("easy_install --index-url https://pypi.python.org/pypi/PyCifRW/3.6.2 pycifrw", shell=True, executable="/bin/bash")
                                     subprocess.check_call(command, shell=True, executable="/bin/bash")
                     else:
                         traceback.print_exc()
