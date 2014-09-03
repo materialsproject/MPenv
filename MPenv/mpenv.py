@@ -146,9 +146,13 @@ def create_env():
                                 pycifrw_command = 'pip install --allow-unverified pycifrw ' + command.split(' ')[-1]
                                 subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
                             except:
-                                # manually install pycifrw first
-                                subprocess.check_call("easy_install --index-url https://pypi.python.org/pypi/PyCifRW/3.5 pycifrw", shell=True, executable="/bin/bash")
-                                subprocess.check_call(command, shell=True, executable="/bin/bash")
+                                try:
+                                    pycifrw_command = 'pip install pycifrw==3.6.2'
+                                    subprocess.check_call(pycifrw_command, shell=True, executable="/bin/bash")
+                                except:
+                                    # manually install pycifrw first
+                                    subprocess.check_call("easy_install --index-url https://pypi.python.org/pypi/PyCifRW/3.5 pycifrw", shell=True, executable="/bin/bash")
+                                    subprocess.check_call(command, shell=True, executable="/bin/bash")
                     else:
                         traceback.print_exc()
                         raise ValueError('Error executing command')
