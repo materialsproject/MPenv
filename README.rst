@@ -60,6 +60,8 @@ Part 2 - Install at NERSC
 
     module load python/2.7.3
     module swap numpy numpy/1.8.2
+    module load virtualenv/1.8.2
+    module load virtualenvwrapper
     source admin_env/bin/activate
 
 3. Now, you can install your environment. Staying in your home directory, type::
