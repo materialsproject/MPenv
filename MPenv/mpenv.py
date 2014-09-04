@@ -74,6 +74,9 @@ def create_env():
             c.append("pip install pycifrw==3.6.2")
             c.append("pip install pyhull")
             c.append("pip install pyyaml")
+            c.append("pip install smoqe")  # for pymatgen-db
+            c.append("pip install mongomock")  # for pymatgen-db
+            c.append("pip install django")  # for pymatgen-db
             c.append("git clone git@github.com:materialsproject/pymatgen.git")
             c.append(("cd", 'pymatgen'))
             c.append("python setup.py develop")
