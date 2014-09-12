@@ -11,11 +11,13 @@ User instructions
 Warnings
 --------
 
-1. This only works on NERSC
+1. If you are planning on running VASP or any other commercial code, make sure you have communicated your license to NERSC and have access to running it. The MPEnv will not give you access to any codes for which you are not a licensed user.
 
-2. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells.
+2. This only works on NERSC
 
-3. After creating your environment, you can't move or rename it. If you need to delete it see the instructions below.
+3. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells.
+
+4. After creating your environment, you can't move or rename it. If you need to delete it see the instructions below.
 
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
