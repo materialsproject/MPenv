@@ -11,11 +11,13 @@ then
    # Load Boltztrap
    export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.3/src
    module load mkl/10.2
+   module swap numpy numpy/1.8.2
 fi
 
 if [ "$NERSC_HOST" == "hopper" ]
 then
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
+   module swap numpy numpy/1.8.2
    $$PACKMOL
 fi
 
