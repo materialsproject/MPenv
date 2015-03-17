@@ -1,5 +1,4 @@
 # <---MPenv $$NAME
-module load python/2.7.3
 
 alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; export DB_LOC=$$CONFIG_LOC/dbs; export VENV_LOC=$$ENV_LOC/virtenv_$$NAME/bin/activate; export SCRIPT_LOC=$$ENV_LOC/config/scripts; echo "You are in environment $$NAME."'
 
@@ -7,6 +6,7 @@ alias update_codes='python $SCRIPT_LOC/update_codes.py'
 
 if [ "$NERSC_HOST" == "carver" ]
 then
+   module load python/2.7.3
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
    # Load Boltztrap
    export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.3/src
@@ -16,6 +16,8 @@ fi
 
 if [ "$NERSC_HOST" == "hopper" ]
 then
+   module load python/2.7.9
+   module load scipy
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
    module swap numpy numpy/1.8.2
    $$PACKMOL
