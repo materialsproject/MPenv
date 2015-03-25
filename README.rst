@@ -22,12 +22,12 @@ Warnings
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Hopper. In theory, Carver should also work, but recent changes at NERSC have caused strange SSL errors in the past so Hopper is probably a better bet.
+1. Log into Carver. In theory, Hopper and Edison should also work, but recent changes at NERSC might have changed this.
 
 2. Type::
 
     module load python/2.7.3
-    module swap numpy numpy/1.8.2
+    module swap numpy numpy/1.8.1
     module load virtualenv/1.8.2
     module load virtualenvwrapper
     mkdir admin_env
