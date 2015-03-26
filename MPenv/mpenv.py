@@ -71,7 +71,6 @@ def create_env():
         if envtype == "MP" or envtype == "rubicon":
             c.append(('print', 'INSTALLING pymatgen (developer mode)'))
             c.append(("cd", '..'))
-            c.append("pip install pycifrw==4.1.1")
             c.append("pip install pyhull")
             c.append("pip install pyyaml")
             c.append("pip install smoqe")  # for pymatgen-db
