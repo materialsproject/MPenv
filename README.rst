@@ -39,6 +39,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     python setup.py develop
 
 
+  .. note:: If the virtualenv command fails, make sure you have set your *default* shell to be BASH and not CSH.
   .. note:: If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section). ``git clone`` might also fail if you're using non-default ssh-key names configured in ``~/.ssh/config``. Please make sure to start the ssh-agent and add your private key in this case: ``eval `ssh-agent -s` && ssh-add <path-to-private-key>``
 
 3. Type::
