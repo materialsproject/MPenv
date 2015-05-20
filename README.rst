@@ -62,7 +62,7 @@ Part 2 - Install at NERSC
 2. Log onto Hopper and enter the admin environment that allows you to use MPenv::
 
     module load python/2.7.3
-    module swap numpy numpy/1.8.2
+    module swap numpy numpy/1.8.1
     module load virtualenv/1.8.2
     module load virtualenvwrapper
     source admin_env/bin/activate
