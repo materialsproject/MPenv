@@ -1,0 +1,16 @@
+_fw_name: CommonAdapter
+_fw_q_type: Cobalt
+rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
+nnodes: 2
+ppnode: 16
+walltime: '24:00:00'
+queue: Q.JCESR
+account: JCESR
+job_name: null
+pre_rocket: |
+            #PBS -v DB_LOC,FW_CONFIG_FILE,VENV_LOC
+            source $VENV_LOC
+            soft add +JCESR
+
+post_rocket: null
+logdir: $$CONFIG_LOC/logs

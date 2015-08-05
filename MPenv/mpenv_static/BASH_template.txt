@@ -23,6 +23,12 @@ then
    $$PACKMOL
 fi
 
+if [[ $( hostname -A ) =~ .*vesta.*anl.gov.* ]]
+then
+	soft add +JCESR
+	export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Vesta/FW_config.yaml
+fi
+
 alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; export VENV_LOC=""; export SCRIPT_LOC=""; echo "You are deactivated."'
 $$MATERIALSPROJECT
 $$OPENBABEL
