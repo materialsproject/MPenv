@@ -30,24 +30,7 @@ Things to remember immediately
 
 4. Nothing you do in your partition can crash jobs running on another partition - except really bad I/O. The worst thing that happens if you fork bomb a compute node is the control system waits for running jobs on your block to end and shuts down the block. Every run arranged through the parent Cobalt gets a fresh block.
 
-4. I/O nodes are another matter - /tmp is automatically swept after every run, but anything an application writes there is stealing memory from the application's ability to do I/O during that run. If an I/O node does down, it will take all runs with it.
-
-External documentation
-----------------------
-
-- Vesta Status: http://status.alcf.anl.gov/vesta/activity
-- PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
-- IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
-- ALCF User Documentation http://www.alcf.anl.gov/user-guides/mira-cetus-vesta
-
-Where to find things
---------------------
-
-Almost everything is provided by adding +JCESR to your ~/.soft file. If hardcoded paths are needed, they are at:
-
-- VASP 5.33 /projects/JCESR/bin
-- QChem  /projects/JCESR/bin
-- Python 2.7.10 /projects/JCESR/python/2.7.10/powerpc64-linux-gnu/gcc-4.4.7/bin
+5. I/O nodes are another matter - /tmp is automatically swept after every run, but anything an application writes there is stealing memory from the application's ability to do I/O during that run. If an I/O node does down, it will take all runs with it.
 
 
 Getting started
@@ -75,19 +58,19 @@ Getting started
 
     qsub --mode script -t 10 -n 128 -q Q.JCESR -A JCESR $(which subblock_cobalt_launcher.sh)
 
-  you should get a job ID back with three files, an .output, .error, and .cobaltlog. The .output line should contain the line::
+   you should get a job ID back with three files, an .output, .error, and .cobaltlog. The .output line should contain the line::
 
     COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
     
-  when you issue::
+   when you issue::
     
     export COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
 
-  then all commands like ``qstat`` and ``qsub`` will use the subblock-cobalt and not the system cobalt. Typing::
+   then all commands like ``qstat`` and ``qsub`` will use the subblock-cobalt and not the system cobalt. Typing::
 
     unset COBALT_CONFIG_FILES
     
-  will return your environment to normal. 
+   will return your environment to normal. 
   
 3. At this point, we should be able to move forward in a mostly generic fashion, but we'll need to adjust the scripts to use system packages. If pip tries to install PyYAML, NumPy, or SciPy, everything will fail::
     
@@ -101,10 +84,24 @@ Getting started
 
 4. As the install progresses, almost everything should install automatially. In general, if a component gets hung up on install, one needs to track down a line with ``--no-site-packages`` and replace it with ``--system-site-packages`` to force the use of the site version we installed.
     
-  to use the version of Fireworks with Cobalt support baked in.
-    
 5. At this point individual scripts and paths may require modification, but it should be possible to use consituent parts together to get something done. Just adjust the ``qsub`` in line 8 to fit the wallclock needed for your runs and remember to set ``COBALT_CONFIG_FILES`` to the run for the parent Cobalt. William is looking at adding convienience functions in the shell to make going back and forth between the parent environment and subblock-cobalt environment easier based on feedback from early users. Other feedback is greatly welcomed.
 
+External documentation
+----------------------
+
+- Vesta Status: http://status.alcf.anl.gov/vesta/activity
+- PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
+- IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
+- ALCF User Documentation http://www.alcf.anl.gov/user-guides/mira-cetus-vesta
+
+Where to find things
+--------------------
+
+Almost everything is provided by adding +JCESR to your ~/.soft file. If hardcoded paths are needed, they are at:
+
+- VASP 5.33 /projects/JCESR/bin
+- QChem  /projects/JCESR/bin
+- Python 2.7.10 /projects/JCESR/python/2.7.10/powerpc64-linux-gnu/gcc-4.4.7/bin
 
 
 Building everything from bare metal
