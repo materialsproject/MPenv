@@ -67,7 +67,7 @@ Getting started
     #   about this file, do a "man softenv".
     
     +mpiwrapper-gcc.legacy
-    +JCSER
+    +JCESR
     +git
     +cmake
     @default
@@ -76,7 +76,7 @@ Getting started
     
 2. Run a quick test to ensure basic functionality::
 
-    qsub --mode script -t 10 -n 128 -q Q.JCESR -A JCESR ${WORKDIR}/bin/subblock_cobalt_launcher.sh
+    qsub --mode script -t 10 -n 128 -q Q.JCESR -A JCESR $(which subblock_cobalt_launcher.sh)
 
   you should get a job ID back with three files, an .output, .error, and .cobaltlog. The .output line should contain the line::
 
