@@ -39,8 +39,8 @@ External documentation
 .. _Vesta Status: http://status.alcf.anl.gov/vesta/activity
 - `PARTS Wiki - distilled developer instructions`
 .. _PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
-_ `IBM BG/Q Application Developers Manual`
-.. _The IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
+- `IBM BG/Q Application Developers Manual`
+.. _IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
 
 
 Where to find things
@@ -51,9 +51,6 @@ Almost everything is provided by adding +JCESR to your ~/.soft file. If hardcode
 - VASP 5.33 /projects/JCESR/bin
 - QChem  /projects/JCESR/bin
 - Python 2.7.10 /projects/JCESR/python/2.7.10/powerpc64-linux-gnu/gcc-4.4.7/bin
-
-
-
 
 
 Getting started
@@ -68,13 +65,14 @@ Getting started
     #   It is used to tell SoftEnv how to customize your environment by
     #   setting up variables such as PATH and MANPATH.  To learn more
     #   about this file, do a "man softenv".
-    @default
-    +mpiwrapper-xl-default
+    
+    +mpiwrapper-gcc.legacy
     +JCSER
     +git
     +cmake
+    @default
     
-    <<EOF
+    # EOF END OF FILE
     
 2. Run a quick test to ensure basic functionality::
 
