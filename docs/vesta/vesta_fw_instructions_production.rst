@@ -35,13 +35,10 @@ Things to remember immediately
 External documentation
 ----------------------
 
-- `Vesta Status`
-.. _Vesta Status: http://status.alcf.anl.gov/vesta/activity
-- `PARTS Wiki - distilled developer instructions`
-.. _PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
-- `IBM BG/Q Application Developers Manual`
-.. _IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
-
+- Vesta Status: http://status.alcf.anl.gov/vesta/activity
+- PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
+- IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
+- ALCF User Documentation http://www.alcf.anl.gov/user-guides/mira-cetus-vesta
 
 Where to find things
 --------------------
