@@ -32,6 +32,30 @@ Things to remember immediately
 
 4. I/O nodes are another matter - /tmp is automatically swept after every run, but anything an application writes there is stealing memory from the application's ability to do I/O during that run. If an I/O node does down, it will take all runs with it.
 
+External documentation
+----------------------
+
+- `Vesta Status`
+.. _Vesta Status: http://status.alcf.anl.gov/vesta/activity
+- `PARTS Wiki - distilled developer instructions`
+.. _PARTS Wiki - distilled developer instructions: https://wiki.alcf.anl.gov/parts/index.php/Blue_Gene/Q
+_ `IBM BG/Q Application Developers Manual`
+.. _The IBM BG/Q Application Developers Manual: http://www.redbooks.ibm.com/redpieces/abstracts/sg247948.html
+
+
+Where to find things
+--------------------
+
+Almost everything is provided by adding +JCESR to your ~/.soft file. If hardcoded paths are needed, they are at:
+
+- VASP 5.33 /projects/JCESR/bin
+- QChem  /projects/JCESR/bin
+- Python 2.7.10 /projects/JCESR/python/2.7.10/powerpc64-linux-gnu/gcc-4.4.7/bin
+
+
+
+
+
 Getting started
 ---------------
 
@@ -50,11 +74,48 @@ Getting started
     +git
     +cmake
     
-    PATH += /gpfs/vesta-fs0/projects/Operations/wscullin/jcesr/fw_env/bin
-    
     <<EOF
+    
+2. Run a quick test to ensure basic functionality::
 
-5. This is done for you in softenv by adding +JCESR. The system Python on Vesta is dated, so we have a few things to build on our own. We'll start with a wide-char enabled Python and pip::
+    qsub --mode script -t 10 -n 128 -q Q.JCESR -A JCESR ${WORKDIR}/bin/subblock_cobalt_launcher.sh
+
+  you should get a job ID back with three files, an .output, .error, and .cobaltlog. The .output line should contain the line::
+
+    COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
+    
+  when you issue::
+    
+    export COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
+
+  then all commands like ``qstat`` and ``qsub`` will use the subblock-cobalt and not the system cobalt. Typing::
+
+    unset COBALT_CONFIG_FILES
+    
+  will return your environment to normal. 
+  
+3. At this point, we should be able to move forward in a mostly generic fashion, but we'll need to adjust the scripts to use system packages. If pip tries to install PyYAML, NumPy, or SciPy, everything will fail::
+    
+    virtualenv --system-site-packages admin_env
+    source admin_env/bin/activate
+    cd admin_env
+    git clone git@github.com:materialsproject/MPenv.git
+    cd MPenv
+    perl -p -i -e 's/virtualenv --no-site-packages/virtualenv --system-site-packages/g' MPenv/mpenv.py
+    python setup.py develop
+
+4. As the install progresses, almost everything should install automatially. In general, if a component gets hung up on install, one needs to track down a line with ``--no-site-packages`` and replace it with ``--system-site-packages`` to force the use of the site version we installed.
+    
+  to use the version of Fireworks with Cobalt support baked in.
+    
+5. At this point individual scripts and paths may require modification, but it should be possible to use consituent parts together to get something done. Just adjust the ``qsub`` in line 8 to fit the wallclock needed for your runs and remember to set ``COBALT_CONFIG_FILES`` to the run for the parent Cobalt. William is looking at adding convienience functions in the shell to make going back and forth between the parent environment and subblock-cobalt environment easier based on feedback from early users. Other feedback is greatly welcomed.
+
+
+
+Building everything from bare metal
+-----------------------------------
+
+1. This is done for you in softenv by adding +JCESR. The system Python on Vesta is dated, so we have a few things to build on our own. We'll start with a wide-char enabled Python and pip::
 
     ## Build python with wide character support and install pip.
     export DC=$(date +%Y%m%d%H%M)
@@ -78,7 +139,7 @@ Getting started
     wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate
     python get-pip.py
     
-5. This is done for you in softenv by adding +JCESR. PyYAML, despite a lot of prodding isn't accepting patches, including an important one that uses size_t rather than int on 64-bit platforms::
+2. This is done for you in softenv by adding +JCESR. PyYAML, despite a lot of prodding isn't accepting patches, including an important one that uses size_t rather than int on 64-bit platforms::
     
     # PyYAML has issues with 64-bit endianness we need to fix
     wget http://pyyaml.org/download/pyyaml/PyYAML-3.11.tar.gz
@@ -91,7 +152,7 @@ Getting started
     python setup.py --without-libyaml install
     popd
     
-6. This is done for you in softenv by adding +JCESR. NumPy and SciPy fail a number of regression tests using the system LAPACK, BLAS, and FFTW, so we build them too, then run the NumPy regression tests. One test will fail which we're fine with as it's a unicode problem and there's a ticket open::
+3. This is done for you in softenv by adding +JCESR. NumPy and SciPy fail a number of regression tests using the system LAPACK, BLAS, and FFTW, so we build them too, then run the NumPy regression tests. One test will fail which we're fine with as it's a unicode problem and there's a ticket open::
     
     wget http://www.netlib.org/lapack/lapack-3.5.0.tgz
     gunzip lapack-3.5.0.tgz
@@ -134,46 +195,13 @@ Getting started
     
     pip install scipy
 
-7. This is done for you in softenv by adding +JCESR. Now on to the bits we'll need to run Subblock-Cobalt within fireworks::
+4. This is done for you in softenv by adding +JCESR. This is done for you in softenv by adding +JCESR. Now on to the bits we'll need to run Subblock-Cobalt within fireworks::
 
     pip install virtualenv
     pip install jinja2    
 
     pip install git+https://github.com/wscullin/subblock-cobalt
     
-8. Run a quick test to ensure basic functionality::
-
-    qsub.py --mode script -t 10 -n 128 -q Q.JCESR -A JCESR ${WORKDIR}/bin/subblock_cobalt_launcher.sh
-
-  you should get a job ID back with three files, an .output, .error, and .cobaltlog. The .output line should contain the line::
-
-    COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
-    
-  when you issue::
-    
-    export COBALT_CONFIG_FILES=${path to the subblock-cobalt config file for that session}
-
-  then all commands like ``qstat`` and ``qsub`` will use the subblock-cobalt and not the system cobalt. Typing::
-
-    unset COBALT_CONFIG_FILES
-    
-  will return your environment to normal. 
-  
-9. At this point, we should be able to move forward in a mostly generic fashion, but we'll need to adjust the scripts to use system packages. If pip tries to install PyYAML, NumPy, or SciPy, everything will fail::
-    
-    virtualenv --system-site-packages admin_env
-    source admin_env/bin/activate
-    cd admin_env
-    git clone git@github.com:materialsproject/MPenv.git
-    cd MPenv
-    perl -p -i -e 's/virtualenv --no-site-packages/virtualenv --system-site-packages/g' MPenv/mpenv.py
-    python setup.py develop
-
-10. As the install progresses, almost everything should install automatially. In general, if a component gets hung up on install, one needs to track down a line with ``--no-site-packages`` and replace it with ``--system-site-packages`` to force the use of the site version we installed.
-    
-  to use the version of Fireworks with Cobalt support baked in.
-    
-12. At this point individual scripts and paths may require modification, but it should be possible to use consituent parts together to get something done. Just adjust the ``qsub`` in line 8 to fit the wallclock needed for your runs and remember to set ``COBALT_CONFIG_FILES`` to the run for the parent Cobalt. William is looking at adding convienience functions in the shell to make going back and forth between the parent environment and subblock-cobalt environment easier based on feedback from early users. Other feedback is greatly welcomed.
 
 .. [#f1] http://www.alcf.anl.gov/files/ensemble_jobs_0.pdf
 .. [#f2] http://www.alcf.anl.gov/user-guides/overview-how-compile-and-link
