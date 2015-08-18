@@ -286,6 +286,8 @@ Creating an admin_env
 Managing an admin_env
 ---------------------
 
+#. Activate your ``admin_env`` environment.
+
 #. To create an environment, start in a directory that has your "private" directory containing the admin DB credentials.
 
 #. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
