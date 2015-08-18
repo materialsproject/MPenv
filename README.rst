@@ -48,7 +48,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
    If the installation was successful, the system should find an executable.
 
-4. Request an environment from an administrator (currently Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
+4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
 
 5. An administrator will create a suite of databases hosted at NERSC for you and send you back a directory, lets call this "aj_vasp_files". *Do not rename or change this directory in any way*.
 
@@ -128,7 +128,7 @@ Getting started with MPenv
 Part 1 - The basics
 -------------------
 
-There are 4(!) main databases that interact within MPenv. You have credentials for these 4 databases in the MPenv files sent to you by the MPenv admin (probably Anubhav). As a first step, you might set up a connection to these database via MongoHub (or similar) so you can easily check the contents of these databases. If you do not have a Mac, you cannot use Mongohub to check database contents, but you can either (i) skip monitoring databases directly and just use the tools built into FireWorks and other packages or (ii) use another program or just the MongoDB command line tools. You can read "The Little MongoDB book" (available for free online) to see how to use the MongoDB command line as one alternative. Mongohub is **not** by any means a requirement.
+There are 4(!) main databases that interact within MPenv. You have credentials for these 4 databases in the MPenv files sent to you by the MPenv admin. As a first step, you might set up a connection to these database via MongoHub (or similar) so you can easily check the contents of these databases. If you do not have a Mac, you cannot use Mongohub to check database contents, but you can either (i) skip monitoring databases directly and just use the tools built into FireWorks and other packages or (ii) use another program or just the MongoDB command line tools. You can read "The Little MongoDB book" (available for free online) to see how to use the MongoDB command line as one alternative. Mongohub is **not** by any means a requirement.
 
 1. The most important database is the **FireWorks** database. This contains all the workflows that you want to run.
 
