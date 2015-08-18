@@ -274,6 +274,18 @@ If you ever want to remove your environment completely (this is different than r
 Administrator instructions
 ==========================
 
+Creating an admin_env
+---------------------
+
+#. Start by creating the admin_env from the instructions listed for users. You might already have one installed if you've created an MPEnv in the past.
+
+#. You will need a directory called admin_env/MP_env/private that contains the DB credentials for making an environment. Obtain this from someone who is currently an admin.
+
+#. Once you have the private dir in the correct spot, you have a working admin_env!
+
+Managing an admin_env
+---------------------
+
 #. To create an environment, start in a directory that has your "private" directory containing the admin DB credentials.
 
 #. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
