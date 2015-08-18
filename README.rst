@@ -279,7 +279,7 @@ Creating an admin_env
 
 #. Start by creating the admin_env from the instructions listed for users. You might already have one installed if you've created an MPEnv in the past.
 
-#. You will need a directory called admin_env/MP_env/private that contains the DB credentials for making an environment. Obtain this from someone who is currently an admin.
+#. You will need a directory called admin_env/MP_env/MP_env/private that contains the DB credentials for making an environment. Obtain this from someone who is currently an admin.
 
 #. Once you have the private dir in the correct spot, you have a working admin_env!
 
@@ -288,10 +288,10 @@ Managing an admin_env
 
 #. Activate your ``admin_env`` environment.
 
-#. To create an environment, start in a directory that has your "private" directory containing the admin DB credentials.
+#. ``cd`` in your admin_env/MP_env directory, and then run ``git pull`` and (maybe) ``python setup.py develop``.
+
+#. Start in a directory where you archive all the environments that you've made. For me, it is ``$HOME/envs``.
 
 #. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
 
-#. Archive the resulting DB files somewhere
-
-#. Send the DB files to the user.
+#. Usually, I tar.gz the resulting DB files and send them to the user by email. But other methods would also be OK. I keep a copy in my envs directory.
