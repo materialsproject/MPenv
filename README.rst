@@ -72,6 +72,8 @@ Part 2 - Install at NERSC
     mpenv aj_vasp
 
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). See note in part 1 if ``git clone`` fails here. The ``rubicon`` clone might still fail and claim a not-existing repo if you don't have the correct permissions. Contact an administrator to be granted access.
+  
+  .. note:: The "aj_vasp" must currently be a *directory*. If you received a .tar.gz file, you should unzip and untar it first
 
 4. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
