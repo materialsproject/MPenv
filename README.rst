@@ -48,7 +48,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
    If the installation was successful, the system should find an executable.
 
-4. Request an environment from an administrator (currently Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
+4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
 
 5. An administrator will create a suite of databases hosted at NERSC for you and send you back a directory, lets call this "aj_vasp_files". *Do not rename or change this directory in any way*.
 
@@ -72,6 +72,8 @@ Part 2 - Install at NERSC
     mpenv aj_vasp
 
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). See note in part 1 if ``git clone`` fails here. The ``rubicon`` clone might still fail and claim a not-existing repo if you don't have the correct permissions. Contact an administrator to be granted access.
+  
+  .. note:: The "aj_vasp" must currently be a *directory*. If you received a .tar.gz file, you should unzip and untar it first
 
 4. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
@@ -109,117 +111,21 @@ There are many things about your environment that you can (and might have to) cu
 
 3. If you modify your ``bashrc.ext``, remember the changes are not applied unless you type ``source ~/.bashrc.ext``.
 
-Part 4 - Modifying code to add workflows
-----------------------------------------
+Part 4 - Modifying or updating your codebases
+---------------------------------------------
 
 .. note:: Currently this only seems to work on Hopper due to strange NERSC updates messing with SSL certs.
 
 1. The codes installed with your environment are in ``<ENV_NAME>/codes``. If you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()`` method) they will modify the behavior of your environment.
 
-2. Use ``git pull`` within each codebase to update that code to the latest version.
+2. Use the ``update_codes`` command to pull the latest changes from **all** codes. **Be careful!** If there is a merge conflict or other problem, the script won't tell you; you need to monitor the output to make sure the pull completed OK.
 
-3. Use the ``update_codes`` command to pull the latest changes from all codes. **Be careful!** If there is a merge conflict or other problem, the script won't tell you; you need to monitor the output to make sure the pull completed OK.
+3. You can also ``git pull`` individually within the repos inside ``<ENV_NAMES>/codes``. If the version number changed, then you also need to run ``python setup.py develop``.
 
-Getting started with MPenv
-==========================
+Running Jobs
+============
 
-  .. note:: This applies to Materials Project environments and to a certain extent, rubicon environments.
-
-Part 1 - The basics
--------------------
-
-There are 4(!) main databases that interact within MPenv. You have credentials for these 4 databases in the MPenv files sent to you by the MPenv admin (probably Anubhav). As a first step, you might set up a connection to these database via MongoHub (or similar) so you can easily check the contents of these databases. If you do not have a Mac, you cannot use Mongohub to check database contents, but you can either (i) skip monitoring databases directly and just use the tools built into FireWorks and other packages or (ii) use another program or just the MongoDB command line tools. You can read "The Little MongoDB book" (available for free online) to see how to use the MongoDB command line as one alternative. Mongohub is **not** by any means a requirement.
-
-1. The most important database is the **FireWorks** database. This contains all the workflows that you want to run.
-
-2. The 2nd most important database is the **VASP** database. This contains the results of your calculations
-
-3. There is also a **submissions** database where you can submit Structure objects (actually SNL objects) for computation. Using this database is optional but (as demonstrated later) can be simpler than trying to create FireWorks directly.
-
-4. Finally, there is an **SNL** database that contains all the structures you've submitted and relaxed. It is used for duplicate checking as well as record-keeping. Generally speaking, you do not need to do worry that this database exists.
-
-One type of MPenv procedure is to submit Structures to the **submissions** database, then use an *automated* command to convert those submissions into **FireWorks** workflows and run them. The results are checked via the **VASP** database. The order of operations is  **submissions** -> **FireWorks** --> **VASP**, but your interaction is only with **submissions** and **VASP** databases.
-
-Another type of MPenv procedure is to dispense with submissions database and instead submit workflows directly to the **FireWorks** database. In this case, your interaction is with **FireWorks** and **VASP** databases.
-
-Part 2 - Running test workflows
--------------------------------
-
-You can run test workflows by the following procedure. This test follows the **submissions** -> **FireWorks** --> **VASP** paradigm.
-
-1. Log into a NERSC machine
-
-2. Activate your environment::
-
-    use_<ENV_NAME>
-
-3. Note: the following command clears all your databases. Type the command::
-
-    go_testing --clear
-
-4. The command above clears all your databases AND submits ~40 test compounds to your **submissions** database. If you want, you can at this point try connecting to your **submissions** database (e.g. via MongoHub) and confirm that you see compounds there.
-
-5. Items in the **submissions** database cannot be run directly. They must first be converted into FireWorks that state the actual calculations we want to perform. Type the command::
-
-    go_submissions
-
-6. You will see output saying that you have new workflows. This command *automatically* turned the new submissions into workflows in the **FireWorks** database that can can be run at NERSC. If you want, you can at this point try connecting to your **FireWorks** database (e.g. via MongoHub) and confirm that you see Workflows there. Or you can type ``lpad get_wflows -d less`` as another option to see what's in the FireWorks database.
-
-7. Let's run our FireWorks by navigating to a scratch directory and using the ``qlaunch`` command of FireWorks::
-
-    cd $GSCRATCH2
-    mkdir first_tests
-    cd first_tests
-    qlaunch -r rapidfire --nlaunches infinite -m 50 --sleep 100 -b 10000
-
-8. This should have submitted some jobs to the queues at NERSC. You should keep the qlaunch command running (or run it periodically) so that as workflow steps complete, new jobs can be submitted.
-
-9. You can check progress of your workflows using the built-in FireWorks monitoring tools. Several such tools, including a web gui, are documented in the FW docs. If you want to be efficient, you will actually look this up (as well as how to rerun jobs, detect failures, etc.). Here is a simple command you can use for basic checking::
-
-    lpad get_wflows -d more
-
-10. When your workflows complete, you should see the results in the **VASP** database (e.g. connect via MongoHub or via pymatgen-db frontend).
-
-Part 3 - Running custom structures
-----------------------------------
-
-You can run custom structures through the typical MP workflow very easily. You need to submit your Structures (as StructureNL objects) to your **submissions** database. Then simply use the same procedure as last time to convert those into FireWorks and run them (we are still following the **submissions** -> **FireWorks** --> **VASP** paradigm).
-
-1. If you want, you can clear all your databases via::
-
-    go_testing --clear -n 'no_submissions'
-
-2. Here is some code you can use to submit a custom Structure to the **submissions** database (you will need to copy your ``<ENV_NAME>/configs/db/submission_db.yaml`` file to the location you run this code, and also have set up your MPRester API key if you want to grab a structure from Materials Project as in this example)::
-
-    from mpworks.submission.submission_mongo import SubmissionMongoAdapter
-    from pymatgen import MPRester
-    from pymatgen.matproj.snl import StructureNL
-
-    submissions_file = 'submission_db.yaml'
-    sma = SubmissionMongoAdapter.from_file(submissions_file)
-
-    # get a Structure object
-    mpr = MPRester()
-    s = mpr.get_structure_by_material_id("mp-149")  # this is Silicon
-
-    # At this point, you could modify the structure if you want.
-
-    # create an SNL object and submit to your submissions database
-    snl = StructureNL(s, 'John Doe <my_email@gmail.com>')
-    sma.submit_snl(snl, 'my_email@gmail.com', parameters=None)
-
-3. Once all your structures are submitted, follow steps 5-10 in the previous part to run it.
-
-4. There are many advanced options for setting priority, basic WF tailoring, auto-setting the submission database based on environment, etc. Consult the email list if you need help with a specific problem.
-
-Part 4 - Running custom workflows
----------------------------------
-
-Part 3 was about running custom *structures* through a typical MP workflow. If you want to run custom workflows (new types of calculations not coded in MP), you have a couple of options. You can either learn a bit more about MPWorks and try to code your workflow so that it can be run as in Part 3, but submitted with certain parameters (e.g., ``sma.submit_snl(snl, 'my_email@gmail.com', parameters={"calculation_type":"CUSTOM_STUFF"})``). This requires modifying the code that turns StructureNL into Workflows. In this case you are still following the **submissions** -> **FireWorks** --> **VASP** paradigm. Some (long and a bit outdated) documentation on this is in the MPWorks code in the docs folder.
-
-The alternate strategy is to create Workflow objects directly and put them in the **FireWorks** database, bypassing the submissions database entirely. Then you are just doing  **FireWorks** --> **VASP**. Once the Workflow objects are in the **FireWorks** database, you can run them by following steps 7-10 in Part 2 of this guide (i.e., basically you just need to run the ``qlaunch`` command.
-
-One code in development to create basic workflows that can run VASP is the **fireworks-vasp** repository (https://github.com/materialsvirtuallab/fireworks-vasp). This code can create Workflow objects that you can directly enter into your FireWorks database (the credentials for your FW database is in the ``my_launchpad.yaml`` given to you by the MPenv admin). This is not the code used by Materials Project for running workflows (MPWorks does that), but is considerably simpler to understand and modify for your needs. You can probably get started with custom workflows much more quickly with this strategy.
+After getting your environment installed, you might want to run some test jobs. See the `MPWorks page <https://github.com/materialsproject/MPWorks>`_ for more details on how to do so.
 
 Updating your environment itself
 ================================
@@ -274,10 +180,24 @@ If you ever want to remove your environment completely (this is different than r
 Administrator instructions
 ==========================
 
-#. To create an environment, start in a directory that has your "private" directory containing the admin DB credentials.
+Creating an admin_env
+---------------------
+
+#. Start by creating the admin_env from the instructions listed for users. You might already have one installed if you've created an MPEnv in the past.
+
+#. You will need a directory called admin_env/MP_env/MP_env/private that contains the DB credentials for making an environment. Obtain this from someone who is currently an admin.
+
+#. Once you have the private dir in the correct spot, you have a working admin_env!
+
+Managing an admin_env
+---------------------
+
+#. Activate your ``admin_env`` environment.
+
+#. ``cd`` in your admin_env/MP_env directory, and then run ``git pull`` and (maybe) ``python setup.py develop``.
+
+#. Start in a directory where you archive all the environments that you've made. For me, it is ``$HOME/envs``.
 
 #. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
 
-#. Archive the resulting DB files somewhere
-
-#. Send the DB files to the user.
+#. Usually, I tar.gz the resulting DB files and send them to the user by email. But other methods would also be OK. I keep a copy in my envs directory.
