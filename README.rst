@@ -15,23 +15,24 @@ Warnings
 
 2. This only works on NERSC
 
-3. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells.
+3. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells. Type `echo $SHELL` when logged in to confirm that your shell is BASH (e.g. `/bin/bash`).
 
 4. After creating your environment, you can't move or rename it. If you need to delete it see the instructions below.
 
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Carver. In theory, Hopper and Edison should also work, but recent changes at NERSC might have changed this.
+1. Log into Edison. Carver is scheduled to be retired by October 2015, and
+   Hopper is scheduled to be retired by January 2016, so use those systems at your own risk.
 
 2. Type::
 
-    module load python/2.7.3
-    module swap numpy numpy/1.8.1
-    module load virtualenv/1.8.2
+    module load python/2.7.9
+    module load numpy/1.9.2
+    module load virtualenv
     module load virtualenvwrapper
     mkdir admin_env
-    virtualenv --no-site-packages admin_env
+    virtualenv admin_env
     source admin_env/bin/activate
     cd admin_env
     git clone git@github.com:materialsproject/MPenv.git
@@ -59,11 +60,11 @@ Part 2 - Install at NERSC
 
 1. Upload the entire files directory you received from an admin (e.g., *aj_vasp_files*) to your home directory at NERSC. Remember to not change this directory!
 
-2. Log onto Hopper and enter the admin environment that allows you to use MPenv::
+2. Log into Edison and enter the admin environment that allows you to use MPenv::
 
-    module load python/2.7.3
-    module swap numpy numpy/1.8.1
-    module load virtualenv/1.8.2
+    module load python/2.7.9
+    module load numpy/1.9.2
+    module load virtualenv
     module load virtualenvwrapper
     source admin_env/bin/activate
 
@@ -137,7 +138,7 @@ From time to time MPenv will have new features and you will want to update your 
 
 If you want to retain these changes, copy the files you need to another directory and copy them back after upgrading your environment.
 
-When you're ready to begin:
+When you're ready to begin (logged into Edison):
 
 1. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
 
@@ -145,9 +146,9 @@ When you're ready to begin:
 
 3. Activate your admin environment::
 
-    module load python/2.7.3
-    module swap numpy numpy/1.8.2
-    module load virtualenv/1.8.2
+    module load python/2.7.9
+    module load numpy/1.9.2
+    module load virtualenv
     module load virtualenvwrapper
     source admin_env/bin/activate
 
