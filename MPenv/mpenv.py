@@ -35,7 +35,7 @@ def create_env():
 
 
     BASHRC_FILE = os.path.join(expanduser("~"), ".bashrc.ext")
-    MACHINES = ('Mendel', 'Hopper', 'Vesta')  # note: you must modify BASH_template.txt when adding machines
+    MACHINES = ('Mendel', 'Hopper', 'Vesta', 'Edison')  # note: you must modify BASH_template.txt when adding machines
 
     print 'VALIDATING DIRECTORY'
     envtype = "FW"
