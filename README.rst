@@ -22,16 +22,16 @@ Warnings
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into matgen.nersc.gov to submit jobs to Mendel. If you've previously set up your environment on Carver, you can simply re-use that environment on matgen (accessible through /global/homes). Hopper is scheduled to be retired by January 2016, so use it at your own risk.
+1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into ``matgen.nersc.gov`` to submit jobs to Mendel. Hopper is scheduled to be retired by January 2016, so use it at your own risk.
 
-2. Load necessary modules on Edison. Skip this on matgen (modules are loaded by default).::
+2. Load necessary modules on Edison. Skip this on matgen (modules are loaded by default)::
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
 
-3. Create virtual environment and install MPenv code.::
+3. Create virtual environment and install MPenv code::
 
     mkdir admin_env
     virtualenv admin_env
@@ -46,20 +46,16 @@ Part 1 - Install the MPenv code at NERSC and request an environment
    * If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
    * ``git clone`` might also fail if you're using non-default ssh-key names configured in ``~/.ssh/config``. Please make sure to start the ssh-agent and add your private key in this case: ``eval `ssh-agent -s` && ssh-add <path-to-private-key>``
 
-3. Type::
+3. Type ``which mpenv``. If the installation was successful, the system should find an executable.
 
-    which mpenv
+4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. ``aj_vasp``. A good environment name should look like ``A_B`` where ``A`` is your initials and ``B`` is some SHORT description that will help you remember what the environment is for. another example: ``wc_surfaces``.
 
-   If the installation was successful, the system should find an executable.
-
-4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
-
-5. An administrator will create a suite of databases hosted at NERSC for you and send you back an archive (a.k.a tarball), let's call this `aj_vasp_files.tar.gz`. *Do not rename or change this archive in any way*.
+5. An administrator will create a suite of databases hosted at NERSC for you and send you back an archive (a.k.a tarball), let's call this ``aj_vasp_files.tar.gz``. *Do not rename or change this archive in any way*.
 
 6. Once you receive the tarball, move to the next part.
 
-Part 2 - Install at NERSC
--------------------------
+Part 2 - Install MP codes at NERSC
+----------------------------------
 
 1. Upload the tarball you received from an admin (e.g., ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log into Edison or matgen, and unpack it (i.e. ``tar -xvzf aj_vasp_files.tar.gz``). Remember to not change this archive or the resulting directory contents!
 
@@ -70,7 +66,7 @@ Part 2 - Install at NERSC
     module load virtualenv
     module load virtualenvwrapper
 
-3. the admin environment that allows you to use MPenv::
+3. activate the admin environment that allows you to use ``mpenv``::
 
     source admin_env/bin/activate
 
@@ -90,7 +86,7 @@ Part 2 - Install at NERSC
 
 7. Activate your environment by typing ``use_<ENV_NAME>``, e.g., ``use_aj_vasp``.
 
-7. Reset your databases by typing ``go_testing --clear -n 'reset'``.
+8. Reset your databases by typing ``go_testing --clear -n 'reset'``.
 
 If all this goes OK, your environment should be installed!
 
