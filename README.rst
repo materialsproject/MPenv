@@ -22,15 +22,17 @@ Warnings
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison. Carver is scheduled to be retired by October 2015, and
-   Hopper is scheduled to be retired by January 2016, so use those systems at your own risk.
+1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into matgen.nersc.gov to submit jobs to Mendel. If you've previously set up your environment on Carver, you can simply re-use that environment on matgen (accessible through /global/homes). Hopper is scheduled to be retired by January 2016, so use it at your own risk.
 
-2. Type::
+2. Load necessary modules on Edison. Skip this on matgen (modules are loaded by default).::
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+
+3. Create virtual environment and install MPenv code.::
+
     mkdir admin_env
     virtualenv admin_env
     source admin_env/bin/activate
@@ -39,9 +41,10 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     cd MPenv
     python setup.py develop
 
-
-  .. note:: If the virtualenv command fails, make sure you have set your *default* shell to be BASH and not CSH.
-  .. note:: If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section). ``git clone`` might also fail if you're using non-default ssh-key names configured in ``~/.ssh/config``. Please make sure to start the ssh-agent and add your private key in this case: ``eval `ssh-agent -s` && ssh-add <path-to-private-key>``
+  .. note::
+   * If the virtualenv command fails, make sure you have set your *default* shell to be BASH and not CSH.
+   * If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
+   * ``git clone`` might also fail if you're using non-default ssh-key names configured in ``~/.ssh/config``. Please make sure to start the ssh-agent and add your private key in this case: ``eval `ssh-agent -s` && ssh-add <path-to-private-key>``
 
 3. Type::
 
@@ -51,48 +54,43 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
 4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. "aj_vasp". A good environment name should look like "A_B" where "A" is your initials and "B" is some SHORT description that will help you remember what the environment is for. another example: "wc_surfaces".
 
-5. An administrator will create a suite of databases hosted at NERSC for you and send you back a directory, lets call this "aj_vasp_files". *Do not rename or change this directory in any way*.
+5. An administrator will create a suite of databases hosted at NERSC for you and send you back an archive (a.k.a tarball), let's call this `aj_vasp_files.tar.gz`. *Do not rename or change this archive in any way*.
 
-6. Once you receive the directory, move to the next part.
+6. Once you receive the tarball, move to the next part.
 
 Part 2 - Install at NERSC
 -------------------------
 
-1. Upload the entire files directory you received from an admin (e.g., *aj_vasp_files*) to your home directory at NERSC. Remember to not change this directory!
+1. Upload the tarball you received from an admin (e.g., ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log into Edison or matgen, and unpack it (i.e. ``tar -xvzf aj_vasp_files.tar.gz``). Remember to not change this archive or the resulting directory contents!
 
-2. Log into Edison and enter the admin environment that allows you to use MPenv::
+2. Load the necessary modules on Edison (skip this on matgen):: 
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+
+3. the admin environment that allows you to use MPenv::
+
     source admin_env/bin/activate
 
-3. Now, you can install your environment. Staying in your home directory, type::
+4. Now, you can install your environment. Staying in your home directory, type::
 
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). See note in part 1 if ``git clone`` fails here. The ``rubicon`` clone might still fail and claim a not-existing repo if you don't have the correct permissions. Contact an administrator to be granted access.
-  
-  .. note:: The "aj_vasp" must currently be a *directory*. If you received a .tar.gz file, you should unzip and untar it first
+  .. note::
+   * Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
+   * There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+   * See note in part 1 if ``git clone`` fails here.
+   * The ``rubicon`` git clone might still fail and claim a not-existing repo if you don't have the correct permissions. Contact an administrator to be granted access.
 
-4. A whole bunch of stuff will happen...just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
+5. A whole bunch of stuff will happen... just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
 
-5. Type::
+6. Log out and in to NERSC again (or ``source ~/.bashrc.ext``).
 
-   source ~/.bashrc.ext
+7. Activate your environment by typing ``use_<ENV_NAME>``, e.g., ``use_aj_vasp``.
 
-  (or log out and log into NERSC again)
-
-6. Activate your environment by typing::
-
-   use_<ENV_NAME>
-
-  e.g., ``use_aj_vasp``.
-
-7. Reset your databases by typing::
-
-    go_testing --clear -n 'reset'
+7. Reset your databases by typing ``go_testing --clear -n 'reset'``.
 
 If all this goes OK, your environment should be installed!
 
@@ -144,20 +142,25 @@ When you're ready to begin (logged into Edison):
 
 2. Delete the entire directory containing your environment. (e.g. ``aj_vasp``). *Make sure you do NOT delete your files directory, e.g. ``aj_vasp_files``. If you lose this directory contact an admin, they can fix it!*
 
-3. Activate your admin environment::
+3. Log out and in again to ensure a clean BASH environment.
+
+3. Load the necessary modules. Skip this on matgen (necessary modules are pre-loaded automatically)::
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+
+4. Activate your admin environment::
+
     source admin_env/bin/activate
 
-4. Pull admin environment changes::
+5. Pull admin environment changes::
 
     cd admin_env/MPenv
     git pull
 
-5. Go back to your home directory and reinstall the virutalenv::
+6. Go back to your home directory and reinstall the virtualenv::
 
     cd ~
     mpenv aj_vasp
