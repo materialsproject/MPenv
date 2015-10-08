@@ -1,7 +1,7 @@
 
 
 from argparse import ArgumentParser
-import os
+import os, time
 from os.path import expanduser
 import shutil
 import string
@@ -23,16 +23,25 @@ def create_env():
     parser = ArgumentParser(description=m_description)
 
     parser.add_argument('name', help='directory containing environment files', default=None)
-    parser.add_argument('--dev', help='dev_mode', action='store_true')
     parser.add_argument('--pymatpro', help='install pymatpro', action='store_true')
 
     args = parser.parse_args()
+    env_exists = os.path.exists(args.name)
+
+    if env_exists:
+	print 'OK, will overwrite config files and (re-)install missing code repositories.'
+	print 'FYI: Remove {} directory to start from scratch'.format(args.name)
+    else:
+      print 'OK, will install brand-new {} environment'.format(args.name)
+
+    print '3 seconds time to abort ...'
+    time.sleep(3)
 
     root_dir = os.getcwd()
     module_dir = os.path.dirname(os.path.abspath(__file__))
     static_dir = os.path.join(module_dir, 'mpenv_static')
     files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
-
+    codes_dir = os.path.join(root_dir, args.name, 'codes')
 
     BASHRC_FILE = os.path.join(expanduser("~"), ".bashrc.ext")
     MACHINES = ('Mendel', 'Hopper', 'Vesta', 'Edison')  # note: you must modify BASH_template.txt when adding machines
@@ -60,57 +69,64 @@ def create_env():
     c.append(("mkdir", "virtenv_{}".format(args.name)))
     c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
     c.append(("activate", os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate_this.py'.format(args.name))))
+    c.append(("mkdir", "codes"))
+    c.append(("cd", 'codes'))
 
-    if not args.dev:
-        c.append(('print', 'INSTALLING FireWorks (developer mode)'))
-        c.append(("mkdir", "codes"))
-        c.append(("cd", 'codes'))
+    if not os.path.exists(os.path.join(codes_dir, 'fireworks')):
+	c.append(('print', 'INSTALLING FireWorks (developer mode)'))
         c.append("git clone git@github.com:materialsproject/fireworks.git")
         c.append(("cd", 'fireworks'))
         c.append("python setup.py develop")
-        if envtype == "MP" or envtype == "rubicon":
-            c.append(('print', 'INSTALLING pymatgen (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("pip install pyhull")
-            c.append("pip install pyyaml")
-            c.append("pip install smoqe")  # for pymatgen-db
-            c.append("pip install mongomock")  # for pymatgen-db
-            c.append("pip install django")  # for pymatgen-db
-            c.append("git clone git@github.com:materialsproject/pymatgen.git")
-            c.append(("cd", 'pymatgen'))
-            c.append("python setup.py develop")
+	c.append(("cd", '..'))
 
-            c.append(('print', 'INSTALLING pymatgen-db (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("git clone git@github.com:materialsproject/pymatgen-db.git")
-            c.append(("cd", 'pymatgen-db'))
-            c.append("python setup.py develop")
+    if envtype == "MP" or envtype == "rubicon":
 
-            c.append(('print', 'INSTALLING custodian (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("git clone git@github.com:materialsproject/custodian.git")
-            c.append(("cd", 'custodian'))
-            c.append("python setup.py develop")
+	if not os.path.exists(os.path.join(codes_dir, 'pymatgen')):
+	  c.append(('print', 'INSTALLING pymatgen (developer mode)'))
+	  c.append("pip install pyhull")
+	  c.append("pip install pyyaml")
+	  c.append("pip install smoqe")  # for pymatgen-db
+	  c.append("pip install mongomock")  # for pymatgen-db
+	  c.append("pip install django")  # for pymatgen-db
+	  c.append("git clone git@github.com:materialsproject/pymatgen.git")
+	  c.append(("cd", 'pymatgen'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
 
-            c.append(('print', 'INSTALLING MPWorks (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("git clone git@github.com:materialsproject/MPWorks.git")
-            c.append(("cd", 'MPWorks'))
-            c.append("python setup.py develop")
+	if not os.path.exists(os.path.join(codes_dir, 'pymatgen-db')):
+	  c.append(('print', 'INSTALLING pymatgen-db (developer mode)'))
+	  c.append("git clone git@github.com:materialsproject/pymatgen-db.git")
+	  c.append(("cd", 'pymatgen-db'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
 
-        if args.pymatpro:
-            c.append(('print', 'INSTALLING pymatpro (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("git clone git@github.com:materialsproject/pymatpro.git")
-            c.append(("cd", 'pymatpro'))
-            c.append("python setup.py develop")
+	if not os.path.exists(os.path.join(codes_dir, 'custodian')):
+	  c.append(('print', 'INSTALLING custodian (developer mode)'))
+	  c.append("git clone git@github.com:materialsproject/custodian.git")
+	  c.append(("cd", 'custodian'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
 
-        if envtype == "rubicon":
-            c.append(('print', 'INSTALLING rubicon (developer mode)'))
-            c.append(("cd", '..'))
-            c.append("git clone git@github.com:materialsproject/rubicon.git")
-            c.append(("cd", 'rubicon'))
-            c.append("python setup.py develop")
+	if not os.path.exists(os.path.join(codes_dir, 'MPWorks')):
+	  c.append(('print', 'INSTALLING MPWorks (developer mode)'))
+	  c.append("git clone git@github.com:materialsproject/MPWorks.git")
+	  c.append(("cd", 'MPWorks'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
+
+    if args.pymatpro and not os.path.exists(os.path.join(codes_dir, 'pymatpro')):
+	c.append(('print', 'INSTALLING pymatpro (developer mode)'))
+	c.append("git clone git@github.com:materialsproject/pymatpro.git")
+	c.append(("cd", 'pymatpro'))
+	c.append("python setup.py develop")
+	c.append(("cd", '..'))
+
+    if envtype == "rubicon" and not os.path.exists(os.path.join(codes_dir, 'rubicon')):
+	c.append(('print', 'INSTALLING rubicon (developer mode)'))
+	c.append("git clone git@github.com:materialsproject/rubicon.git")
+	c.append(("cd", 'rubicon'))
+	c.append("python setup.py develop")
+	c.append(("cd", '..'))
 
     c.append(('print', 'ADDING SETTINGS'))
     c.append(("cd", os.path.join(root_dir, args.name)))
@@ -150,7 +166,8 @@ def create_env():
                         raise ValueError('Error executing command')
 
             elif command[0] == 'mkdir':
-                os.mkdir(command[1])
+		if not os.path.exists(command[1]):
+		    os.mkdir(command[1])
             elif command[0] == 'cd':
                 os.chdir(command[1])
             elif command[0] == 'activate':
