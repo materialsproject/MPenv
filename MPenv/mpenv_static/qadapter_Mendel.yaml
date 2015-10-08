@@ -12,6 +12,8 @@ pre_rocket: |
             module load python/2.7.3
             module swap numpy numpy/1.8.1
             module load vasp/5.2.matgen
+            module use /usr/syscom/opt/slurm/modulefiles
+            module load slurm
             source $VENV_LOC
 
 post_rocket: null
