@@ -95,9 +95,9 @@ Part 3 - Customize your environment
 
 There are many things about your environment that you can (and might have to) customize. Here are a few.
 
-1. Go to ``<ENV_NAME>/config/config_Hopper`` where <ENV_NAME> is something like ``aj_vasp``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime, mppwidth, and account you want. You might want to change the queue to "debug" for example in order to test your environment. If you are not a member of the ``jcesr`` NERSC repository, either delete the ``account`` field or change to an account that you can charge at NERSC.  Do the same thing for ``config_Mendel``. (Note: Carver is not currently supported) If you are using Hopper to run VASP, you *must* change the mppwidth to 48.
+1. Go to ``<ENV_NAME>/config/config_<MACHINE>`` where ``<ENV_NAME>`` is something like ``aj_vasp`` and ``<MACHINE>`` is either ``Mendel``, ``Hopper``, or ``Edison``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime, mppwidth, and account you want. You might want to change the queue to "debug" for example in order to test your environment. If the ``account`` field says ``jcesr`` but you are not a member of the ``jcesr`` NERSC repository, either delete the ``account`` field or change to an account that you can charge at NERSC. If you are using Hopper to run VASP, you *must* change the mppwidth to 48. Repeat for all machines that you're using.
 
-2. In your ``.bashrc.ext``, you'll want to add two lines::
+2. In your ``.bashrc.ext``, you'll want to add two lines (if not already done by ``mpenv``)::
 
     export VASP_PSP_DIR=<PATH_TO_POTCARS>
     export MAPI_KEY=<MAPI_KEY>
@@ -122,46 +122,39 @@ Running Jobs
 
 After getting your environment installed, you might want to run some test jobs. See the `MPWorks page <https://github.com/materialsproject/MPWorks>`_ for more details on how to do so.
 
-Updating your environment itself
-================================
+Updating your admin environment
+===============================
 
-From time to time MPenv will have new features and you will want to update your environment. This is different than updating the codes itself - it is updating the code that *installs* the high-throughput codes. You can update MPenv without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that:
+From time to time MPenv will have new features and you will want to update your admin environment. This is different than updating the codes itself - it is updating the code that *installs* the high-throughput codes. You can update MPenv without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that this will delete any configuration updates you made to your environment (e.g., ``my_qadapter.yaml``). If you want to retain these changes, copy the files you need to another directory and copy/merge them back after upgrading your admin environment.
 
-* this will delete any code updates you made to your environment unless they are backed up on git
-* this will delete any configuration updates you made to your environment (e.g., ``my_qadapter.yaml``)
-
-If you want to retain these changes, copy the files you need to another directory and copy them back after upgrading your environment.
-
-When you're ready to begin (logged into Edison):
+When you're ready to begin (logged into NERSC):
 
 1. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
 
-2. Delete the entire directory containing your environment. (e.g. ``aj_vasp``). *Make sure you do NOT delete your files directory, e.g. ``aj_vasp_files``. If you lose this directory contact an admin, they can fix it!*
+2. Log out and in again to ensure a clean BASH environment.
 
-3. Log out and in again to ensure a clean BASH environment.
-
-4. Load the necessary modules. Skip this on matgen (modules are pre-loaded automatically)::
+3. Load the necessary modules. Skip this on matgen (modules are pre-loaded automatically)::
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
 
-5. Activate your admin environment::
+4. Activate your admin environment::
 
     source admin_env/bin/activate
 
-6. Pull admin environment changes::
+5. Pull admin environment changes::
 
     cd admin_env/MPenv
     git pull
 
-7. Go back to your home directory and reinstall the virtualenv::
+6. Go back to your home directory and reinstall::
 
     cd ~
     mpenv aj_vasp
     
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
 
 8. Log out and in to NERSC again, or ``source ~/.bashrc.ext``.
 
