@@ -1,7 +1,7 @@
 
 
 from argparse import ArgumentParser
-import os, time
+import os, time, re
 from os.path import expanduser
 import shutil
 import string
@@ -34,6 +34,12 @@ def create_env():
     else:
       print 'OK, will install brand-new {} environment'.format(args.name)
 
+    BASHRC_FILE = os.path.join(expanduser("~"), ".bashrc.ext")
+    with open(BASHRC_FILE, 'r') as f:
+	if re.search(r'<---MPenv {}'.format(args.name), f.read()):
+	    print 'ERROR: make sure to remove {} section from {}!'.format(args.name, BASHRC_FILE)
+	    return
+
     print '3 seconds time to abort ...'
     time.sleep(3)
 
@@ -43,16 +49,17 @@ def create_env():
     files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
     codes_dir = os.path.join(root_dir, args.name, 'codes')
 
-    BASHRC_FILE = os.path.join(expanduser("~"), ".bashrc.ext")
     MACHINES = ('Mendel', 'Hopper', 'Vesta', 'Edison')  # note: you must modify BASH_template.txt when adding machines
 
     print 'VALIDATING DIRECTORY'
     envtype = "FW"
     if not os.path.exists(files_dir):
-        raise ValueError("Files directory: {} does not exist! Please make sure you are typing the ENVIRONMENT name and not the directory name.".format(files_dir))
+	print "ERROR: Files directory {} does not exist! Please make sure you are typing the ENVIRONMENT name and not the directory name.".format(files_dir)
+	return
 
     if not os.path.exists(os.path.join(files_dir, 'my_launchpad.yaml')):
-        raise ValueError("Missing file: {}".format(files_dir, 'my_launchpad.yaml'))
+	print "ERROR: Missing file: {}".format(files_dir, 'my_launchpad.yaml')
+	return
 
     if os.path.exists(os.path.join(files_dir, 'tasks_db.json')):
         envtype = "MP"

@@ -129,7 +129,7 @@ From time to time MPenv will have new features and you will want to update your 
 
 When you're ready to begin (logged into NERSC):
 
-1. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes.
+1. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes. ``mpenv`` will abort if you forget to do this and if the respective section already exists in ``.bashrc.ext``.
 
 2. Log out and in again to ensure a clean BASH environment.
 
