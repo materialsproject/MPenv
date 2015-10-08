@@ -140,31 +140,32 @@ When you're ready to begin (logged into Edison):
 
 3. Log out and in again to ensure a clean BASH environment.
 
-3. Load the necessary modules. Skip this on matgen (necessary modules are pre-loaded automatically)::
+4. Load the necessary modules. Skip this on matgen (modules are pre-loaded automatically)::
 
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
 
-4. Activate your admin environment::
+5. Activate your admin environment::
 
     source admin_env/bin/activate
 
-5. Pull admin environment changes::
+6. Pull admin environment changes::
 
     cd admin_env/MPenv
     git pull
 
-6. Go back to your home directory and reinstall the virtualenv::
+7. Go back to your home directory and reinstall the virtualenv::
 
     cd ~
     mpenv aj_vasp
-    source ~/.bashrc.ext
-
+    
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this). If you get an error regarding PyCIFRW, try ``--alternate_pycifrw``.
 
-6. Finally, remember to go back and make any configuration or code changes you need!
+8. Log out and in to NERSC again, or ``source ~/.bashrc.ext``.
+
+9. Finally, remember to go back and make any configuration or code changes you need!
 
 Deleting your environment
 =========================
