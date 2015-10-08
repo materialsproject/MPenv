@@ -24,12 +24,21 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
 1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into ``matgen.nersc.gov`` to submit jobs to Mendel. Hopper is scheduled to be retired by January 2016, so use it at your own risk.
 
-2. Load necessary modules on Edison. Skip this on matgen (modules are loaded by default)::
+2. Load necessary modules. In the future, you'll be able to skip this on matgen (we're trying to get all necessary modules loaded by default)::
 
+    # Edison
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+    
+    # matgen
+    module load python/2.7.3
+    module swap numpy numpy/1.8.1
+    module load virtualenv
+    module load virtualenvwrapper
+    module use /usr/syscom/opt/slurm/modulefiles
+    module load slurm
 
 3. Create virtual environment and install MPenv code::
 
@@ -59,12 +68,22 @@ Part 2 - Install MP codes at NERSC
 
 1. Upload the tarball you received from an admin (e.g., ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log into Edison or matgen, and unpack it (i.e. ``tar -xvzf aj_vasp_files.tar.gz``). Remember to not change this archive or the resulting directory contents!
 
-2. Load the necessary modules on Edison (skip this on matgen):: 
+2. Load the necessary modules (can be skipped on matgen in the future):: 
 
+    # Edison
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+    
+    # matgen
+    module load python/2.7.3
+    module swap numpy numpy/1.8.1
+    module load virtualenv
+    module load virtualenvwrapper
+    module use /usr/syscom/opt/slurm/modulefiles
+    module load slurm
+
 
 3. activate the admin environment that allows you to use ``mpenv``::
 
@@ -133,12 +152,22 @@ When you're ready to begin (logged into NERSC):
 
 2. Log out and in again to ensure a clean BASH environment.
 
-3. Load the necessary modules. Skip this on matgen (modules are pre-loaded automatically)::
+3. Load the necessary modules. Can be skipped on matgen in the near future::
 
+    # Edison
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+    
+    # matgen
+    module load python/2.7.3
+    module swap numpy numpy/1.8.1
+    module load virtualenv
+    module load virtualenvwrapper
+    module use /usr/syscom/opt/slurm/modulefiles
+    module load slurm
+
 
 4. Activate your admin environment::
 
