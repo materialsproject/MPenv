@@ -22,7 +22,7 @@ Warnings
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into ``matgen.nersc.gov`` to submit jobs to Mendel. Hopper is scheduled to be retired by January 2016, so use it at your own risk.
+1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot log into ``matgen.nersc.gov``, run ``id`` on another NERSC system (Hopper, Edison) and check that you're in the ``matcomp`` group. If not, request to be added to the group by sending an e-mail to an administrator (Patrick Huck). Hopper is scheduled to be retired by January 2016, so use it at your own risk.
 
 2. Load necessary modules. In the future, you'll be able to skip this on matgen (we're trying to get all necessary modules loaded by default)::
 
