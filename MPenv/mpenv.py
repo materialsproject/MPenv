@@ -70,11 +70,15 @@ def create_env():
     print 'OK, we are going to install a {} environment'.format(envtype)
 
     c = []
-    c.append(('print', 'SETTING UP VIRTUALENV'))
     c.append(("mkdir", args.name))
     c.append(("cd", args.name))
-    c.append(("mkdir", "virtenv_{}".format(args.name)))
-    c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
+
+    if not os.path.exists(os.path.join(root_dir, args.name, "virtenv_{}".format(args.name))):
+	c.append(('print', 'SETTING UP VIRTUALENV'))
+	c.append(("mkdir", "virtenv_{}".format(args.name)))
+	c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
+
+    c.append(('print', 'ACTIVATE VIRTUALENV'))
     c.append(("activate", os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate_this.py'.format(args.name))))
     c.append(("mkdir", "codes"))
     c.append(("cd", 'codes'))
