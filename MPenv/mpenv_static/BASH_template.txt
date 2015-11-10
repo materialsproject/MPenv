@@ -4,7 +4,7 @@ alias use_$$NAME='source $$ACTIVATE; export FW_CONFIG_FILE=$FW_CONFIG_$$NAME; ex
 
 alias update_codes='python $SCRIPT_LOC/update_codes.py'
 
-if [ "$NERSC_HOST" == "carver" ]
+if [ "$NERSC_HOST" == "matgen" ]
 then
    module load python/2.7.3
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
