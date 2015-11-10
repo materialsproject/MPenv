@@ -1,7 +1,7 @@
 _fw_name: CommonAdapter
 _fw_q_type: SLURM
 rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
-nodes: 1
+nodes: 2
 ntasks_per_node: 16
 walltime: '24:00:00'
 queue: matgen_prior
@@ -9,11 +9,15 @@ account: matgen
 job_name: null
 pre_rocket: |
             #SBATCH --export=DB_LOC,FW_CONFIG_FILE,VENV_LOC
+            module purge
+            module load intel
+            module load openmpi
             module load python/2.7.3
             module swap numpy numpy/1.8.1
-            module load vasp/5.2.matgen
             module use /usr/syscom/opt/slurm/modulefiles
             module load slurm
+            module use /usr/common/das/Modules/modulefiles
+            module load vasp/5.2
             source $VENV_LOC
 
 post_rocket: null
