@@ -31,14 +31,14 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
-    
+
     # matgen
+    module load vim
+    module unload intel
     module load python/2.7.3
     module swap numpy numpy/1.8.1
     module load virtualenv
     module load virtualenvwrapper
-    module use /usr/syscom/opt/slurm/modulefiles
-    module load slurm
 
 3. Create virtual environment and install MPenv code::
 
@@ -46,6 +46,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     virtualenv admin_env
     source admin_env/bin/activate
     cd admin_env
+    eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     git clone git@github.com:materialsproject/MPenv.git
     cd MPenv
     python setup.py develop
@@ -53,7 +54,6 @@ Part 1 - Install the MPenv code at NERSC and request an environment
   .. note::
    * If the virtualenv command fails, make sure you have set your *default* shell to be BASH and not CSH.
    * If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
-   * ``git clone`` might also fail if you're using non-default ssh-key names configured in ``~/.ssh/config``. Please make sure to start the ssh-agent and add your private key in this case: ``eval `ssh-agent -s` && ssh-add <path-to-private-key>``
 
 3. Type ``which mpenv``. If the installation was successful, the system should find an executable.
 
@@ -68,25 +68,25 @@ Part 2 - Install MP codes at NERSC
 
 1. Upload the tarball you received from an admin (e.g., ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log into Edison or matgen, and unpack it (i.e. ``tar -xvzf aj_vasp_files.tar.gz``). Remember to not change this archive or the resulting directory contents!
 
-2. Load the necessary modules (can be skipped on matgen in the future):: 
+2. Load the necessary modules (can be skipped on matgen in the future)::
 
     # Edison
     module load python/2.7.9
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
-    
+
     # matgen
+    module load vim
+    module unload intel
     module load python/2.7.3
     module swap numpy numpy/1.8.1
     module load virtualenv
     module load virtualenvwrapper
-    module use /usr/syscom/opt/slurm/modulefiles
-    module load slurm
 
+3. add GitHub ssh-key and activate the admin environment that allows you to use ``mpenv``::
 
-3. activate the admin environment that allows you to use ``mpenv``::
-
+    eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     source admin_env/bin/activate
 
 4. Now, you can install your environment. Staying in your home directory, type::
@@ -116,7 +116,13 @@ There are many things about your environment that you can (and might have to) cu
 
 1. Go to ``<ENV_NAME>/config/config_<MACHINE>`` where ``<ENV_NAME>`` is something like ``aj_vasp`` and ``<MACHINE>`` is either ``Mendel``, ``Hopper``, or ``Edison``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime, mppwidth, and account you want. You might want to change the queue to "debug" for example in order to test your environment. If the ``account`` field says ``jcesr`` but you are not a member of the ``jcesr`` NERSC repository, either delete the ``account`` field or change to an account that you can charge at NERSC. If you are using Hopper to run VASP, you *must* change the mppwidth to 48. Repeat for all machines that you're using.
 
-2. In your ``.bashrc.ext``, you'll want to add two lines (if not already done by ``mpenv``)::
+2. Since ``Mendel`` is using SLURM, you'll also need to add the following to
+   ``my_fworker.yaml`` to run VASP on multiple nodes in parallel::
+
+    env:
+        mpi_cmd: srun
+
+3. In your ``.bashrc.ext``, you'll want to add two lines (if not already done by ``mpenv``)::
 
     export VASP_PSP_DIR=<PATH_TO_POTCARS>
     export MAPI_KEY=<MAPI_KEY>
@@ -159,7 +165,7 @@ When you're ready to begin (logged into NERSC):
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
-    
+
     # matgen
     module load python/2.7.3
     module swap numpy numpy/1.8.1
@@ -182,7 +188,7 @@ When you're ready to begin (logged into NERSC):
 
     cd ~
     mpenv aj_vasp
-    
+
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
 
 8. Log out and in to NERSC again, or ``source ~/.bashrc.ext``.
