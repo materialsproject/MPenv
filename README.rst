@@ -75,20 +75,32 @@ Part 1 - Install the MPenv code at NERSC and request an environment
      ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com,
      click account settings at top-right, then the 'SSH keys' section).
 
-3. Type ``which mpenv``. If the installation was successful, the system should find an executable.
+3. Type ``which mpenv``. If the installation was successful, the system should
+   find an executable.
 
-4. Request an environment from an administrator (currently Patrick Huck; backup Anubhav Jain). The current procedure is just to send an email with a requested environment name, e.g. ``aj_vasp``. A good environment name should look like ``A_B`` where ``A`` is your initials and ``B`` is some SHORT description that will help you remember what the environment is for. another example: ``wc_surfaces``.
+4. Request an environment from an administrator (currently Patrick Huck; backup
+   Anubhav Jain). The current procedure is just to send an email with a
+   requested environment name, e.g. ``aj_vasp``. A good environment name should
+   look like ``A_B`` where ``A`` is your initials and ``B`` is some SHORT
+   description that will help you remember what the environment is for. another
+   example: ``wc_surfaces``.
 
-5. An administrator will create a suite of databases hosted at NERSC for you and send you back an archive (a.k.a tarball), let's call this ``aj_vasp_files.tar.gz``. *Do not rename or change this archive in any way*.
+5. An administrator will create a suite of databases hosted at NERSC for you
+   and send you back an archive (a.k.a tarball), let's call this
+   ``aj_vasp_files.tar.gz``. *Do not rename or change this archive in any way*.
 
 6. Once you receive the tarball, move to the next part.
 
 Part 2 - Install MP codes at NERSC
 ----------------------------------
 
-1. Upload the tarball you received from an admin (e.g., ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log into Edison or matgen, and unpack it (i.e. ``tar -xvzf aj_vasp_files.tar.gz``). Remember to not change this archive or the resulting directory contents!
+1. Upload the tarball you received from an admin (e.g.,
+   ``aj_vasp_files.tar.gz``) via ``scp`` to your home directory at NERSC, log
+   into Edison or matgen, and unpack it (i.e. ``tar -xvzf
+   aj_vasp_files.tar.gz``). Remember to not change this archive or the
+   resulting directory contents!
 
-2. Load the necessary modules (can be skipped on matgen in the future)::
+2. Load the necessary modules::
 
     # Edison
     module load python/2.7.9
@@ -104,7 +116,8 @@ Part 2 - Install MP codes at NERSC
     module load virtualenv
     module load virtualenvwrapper
 
-3. add GitHub ssh-key and activate the admin environment that allows you to use ``mpenv``::
+3. add GitHub ssh-key and activate the admin environment that allows you to use
+   ``mpenv``::
 
     eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     source admin_env/bin/activate
@@ -114,12 +127,17 @@ Part 2 - Install MP codes at NERSC
     mpenv aj_vasp
 
   .. note::
-   * Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``.
-   * There is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+   * Replace ``aj_vasp`` with whatever environment name you requested, e.g.
+     ``wc_surfaces``.
+   * There is a ``--pymatpro`` option if you need to install pymatpro (people
+     working with meta db builders might need this).
    * See note in part 1 if ``git clone`` fails here.
-   * The ``rubicon`` git clone might still fail and claim a not-existing repo if you don't have the correct permissions. Contact an administrator to be granted access.
+   * The ``rubicon`` git clone might still fail and claim a not-existing repo
+     if you don't have the correct permissions. Contact an administrator to be
+     granted access.
 
-5. A whole bunch of stuff will happen... just wait for it. Hopefully it will succeed at the end and create a new directory with your environment name.
+5. A whole bunch of stuff will happen... just wait for it. Hopefully it will
+   succeed at the end and create a new directory with your environment name.
 
 6. Log out and in to NERSC again (or ``source ~/.bashrc.ext``).
 
@@ -132,9 +150,19 @@ If all this goes OK, your environment should be installed!
 Part 3 - Customize your environment
 -----------------------------------
 
-There are many things about your environment that you can (and might have to) customize. Here are a few.
+There are many things about your environment that you can (and might have to)
+customize. Here are a few.
 
-1. Go to ``<ENV_NAME>/config/config_<MACHINE>`` where ``<ENV_NAME>`` is something like ``aj_vasp`` and ``<MACHINE>`` is either ``Mendel``, ``Hopper``, or ``Edison``. Modify ``my_qadapter.yaml`` so that queue scripts are submitted to the queue you want with the walltime, mppwidth, and account you want. You might want to change the queue to "debug" for example in order to test your environment. If the ``account`` field says ``jcesr`` but you are not a member of the ``jcesr`` NERSC repository, either delete the ``account`` field or change to an account that you can charge at NERSC. If you are using Hopper to run VASP, you *must* change the mppwidth to 48. Repeat for all machines that you're using.
+1. Go to ``<ENV_NAME>/config/config_<MACHINE>`` where ``<ENV_NAME>`` is
+   something like ``aj_vasp`` and ``<MACHINE>`` is either ``Mendel``,
+   ``Hopper``, or ``Edison``. Modify ``my_qadapter.yaml`` so that queue scripts
+   are submitted to the queue you want with the walltime, mppwidth, and account
+   you want. You might want to change the queue to "debug" for example in order
+   to test your environment. If the ``account`` field says ``jcesr`` but you
+   are not a member of the ``jcesr`` NERSC repository, either delete the
+   ``account`` field or change to an account that you can charge at NERSC. If
+   you are using Hopper to run VASP, you *must* change the mppwidth to 48.
+   Repeat for all machines that you're using.
 
 2. Since ``Mendel`` is using SLURM, you'll also need to add the following to
    ``my_fworker.yaml`` to run VASP on multiple nodes in parallel::
@@ -142,43 +170,70 @@ There are many things about your environment that you can (and might have to) cu
     env:
         mpi_cmd: srun
 
-3. In your ``.bashrc.ext``, you'll want to add two lines (if not already done by ``mpenv``)::
+3. In your ``.bashrc.ext``, you'll want to add two lines (if not already done
+   by ``mpenv``)::
 
     export VASP_PSP_DIR=<PATH_TO_POTCARS>
     export MAPI_KEY=<MAPI_KEY>
 
-   where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your Materials Project API key. See the pymatgen docs for more details. Some features of the code (e.g. VASP input generation) won't work without these. Note that members of the ``matgen`` group at NERSC should be able to set their <PATH_TO_POTCARS> as ``/project/projectdirs/matgen/POTCARs``.
+   where <PATH_TO_POTCARS> contains your POTCARs dir and MAPI_KEY is your
+   Materials Project API key. See the pymatgen docs for more details. Some
+   features of the code (e.g. VASP input generation) won't work without these.
+   Note that members of the ``matgen`` group at NERSC should be able to set
+   their <PATH_TO_POTCARS> as ``/project/projectdirs/matgen/POTCARs``.
 
-3. If you modify your ``bashrc.ext``, remember the changes are not applied unless you type ``source ~/.bashrc.ext``.
+3. If you modify your ``bashrc.ext``, remember the changes are not applied
+   unless you type ``source ~/.bashrc.ext``.
 
 Part 4 - Modifying or updating your codebases
 ---------------------------------------------
 
 .. note:: Currently this only seems to work on Hopper due to strange NERSC updates messing with SSL certs.
 
-1. The codes installed with your environment are in ``<ENV_NAME>/codes``. If you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()`` method) they will modify the behavior of your environment.
+1. The codes installed with your environment are in ``<ENV_NAME>/codes``. If
+   you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()``
+   method) they will modify the behavior of your environment.
 
-2. Use the ``update_codes`` command to pull the latest changes from **all** codes. **Be careful!** If there is a merge conflict or other problem, the script won't tell you; you need to monitor the output to make sure the pull completed OK.
+2. Use the ``update_codes`` command to pull the latest changes from **all**
+   codes. **Be careful!** If there is a merge conflict or other problem, the
+   script won't tell you; you need to monitor the output to make sure the pull
+   completed OK.
 
-3. You can also ``git pull`` individually within the repos inside ``<ENV_NAMES>/codes``. If the version number changed, then you also need to run ``python setup.py develop``.
+3. You can also ``git pull`` individually within the repos inside
+   ``<ENV_NAMES>/codes``. If the version number changed, then you also need to
+   run ``python setup.py develop``.
 
 Running Jobs
 ============
 
-After getting your environment installed, you might want to run some test jobs. See the `MPWorks page <https://github.com/materialsproject/MPWorks>`_ for more details on how to do so.
+After getting your environment installed, you might want to run some test jobs.
+See the `MPWorks page <https://github.com/materialsproject/MPWorks>`_ for more
+details on how to do so.
 
 Updating your admin environment
 ===============================
 
-From time to time MPenv will have new features and you will want to update your admin environment. This is different than updating the codes itself - it is updating the code that *installs* the high-throughput codes. You can update MPenv without deleting any data you might have accumulated in your database (contact an admin if you want your DBs reset). However you should know that this will delete any configuration updates you made to your environment (e.g., ``my_qadapter.yaml``). If you want to retain these changes, copy the files you need to another directory and copy/merge them back after upgrading your admin environment.
+From time to time MPenv will have new features and you will want to update your
+admin environment. This is different than updating the codes itself - it is
+updating the code that *installs* the high-throughput codes. You can update
+MPenv without deleting any data you might have accumulated in your database
+(contact an admin if you want your DBs reset). However you should know that
+this will delete any configuration updates you made to your environment (e.g.,
+``my_qadapter.yaml``). If you want to retain these changes, copy the files you
+need to another directory and copy/merge them back after upgrading your admin
+environment.
 
 When you're ready to begin (logged into NERSC):
 
-1. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section. This will be rewritten when you reinstall the environment along with any new changes. ``mpenv`` will abort if you forget to do this and if the respective section already exists in ``.bashrc.ext``.
+1. Edit your ``.bashrc.ext`` file - look for the commented section referring to
+   your environment name and delete that section. This will be rewritten when
+   you reinstall the environment along with any new changes. ``mpenv`` will
+   abort if you forget to do this and if the respective section already exists
+   in ``.bashrc.ext``.
 
 2. Log out and in again to ensure a clean BASH environment.
 
-3. Load the necessary modules. Can be skipped on matgen in the near future::
+3. Load necessary modules::
 
     # Edison
     module load python/2.7.9
@@ -187,16 +242,16 @@ When you're ready to begin (logged into NERSC):
     module load virtualenvwrapper
 
     # matgen
+    module load vim
+    module unload intel
     module load python/2.7.3
     module swap numpy numpy/1.8.1
     module load virtualenv
     module load virtualenvwrapper
-    module use /usr/syscom/opt/slurm/modulefiles
-    module load slurm
 
+4. Add your GitHub sshkey and activate your admin environment::
 
-4. Activate your admin environment::
-
+    eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     source admin_env/bin/activate
 
 5. Pull admin environment changes::
@@ -209,7 +264,9 @@ When you're ready to begin (logged into NERSC):
     cd ~
     mpenv aj_vasp
 
-  .. note:: Replace ``aj_vasp`` with whatever environment name you requested, e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to install pymatpro (people working with meta db builders might need this).
+  .. note:: Replace ``aj_vasp`` with whatever environment name you requested,
+  e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to
+  install pymatpro (people working with meta db builders might need this).
 
 8. Log out and in to NERSC again, or ``source ~/.bashrc.ext``.
 
@@ -218,13 +275,16 @@ When you're ready to begin (logged into NERSC):
 Deleting your environment
 =========================
 
-If you ever want to remove your environment completely (this is different than resetting DBs), you should:
+If you ever want to remove your environment completely (this is different than
+resetting DBs), you should:
 
 #. Contact an administrator to tear down the DB backends
 
-#. Remove the entire directory containing your environment AND your files (e.g. ``aj_vasp`` and ``aj_vasp_files``)
+#. Remove the entire directory containing your environment AND your files (e.g.
+   ``aj_vasp`` and ``aj_vasp_files``)
 
-#. Edit your ``.bashrc.ext`` file - look for the commented section referring to your environment name and delete that section.
+#. Edit your ``.bashrc.ext`` file - look for the commented section referring to
+   your environment name and delete that section.
 
 Administrator instructions
 ==========================
@@ -232,21 +292,29 @@ Administrator instructions
 Creating an admin_env
 ---------------------
 
-#. Start by creating the admin_env from the instructions listed for users. You might already have one installed if you've created an MPEnv in the past.
+#. Start by creating the admin_env from the instructions listed for users. You
+   might already have one installed if you've created an MPEnv in the past.
 
-#. You will need a directory called admin_env/MP_env/MP_env/private that contains the DB credentials for making an environment. Obtain this from someone who is currently an admin.
+#. You will need a directory called admin_env/MP_env/MP_env/private that
+   contains the DB credentials for making an environment. Obtain this from
+   someone who is currently an admin.
 
-#. Once you have the private dir in the correct spot, you have a working admin_env!
+#. Once you have the private dir in the correct spot, you have a working
+   admin_env!
 
 Managing an admin_env
 ---------------------
 
 #. Activate your ``admin_env`` environment.
 
-#. ``cd`` in your admin_env/MP_env directory, and then run ``git pull`` and (maybe) ``python setup.py develop``.
+#. ``cd`` in your admin_env/MP_env directory, and then run ``git pull`` and
+   (maybe) ``python setup.py develop``.
 
-#. Start in a directory where you archive all the environments that you've made. For me, it is ``$HOME/envs``.
+#. Start in a directory where you archive all the environments that you've
+   made. For me, it is ``$HOME/envs``.
 
-#. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
+#. Type ``mpdbmake <ENV_NAME> <TYPE>`` where <ENV_NAME> is the name the user
+   requested and <TYPE> is either ``FW`` or ``MP`` or ``rubicon``.
 
-#. Usually, I tar.gz the resulting DB files and send them to the user by email. But other methods would also be OK. I keep a copy in my envs directory.
+#. Usually, I tar.gz the resulting DB files and send them to the user by email.
+   But other methods would also be OK. I keep a copy in my envs directory.
