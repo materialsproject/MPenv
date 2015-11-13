@@ -9,7 +9,7 @@ account: matgen
 job_name: null
 pre_rocket: |
             #SBATCH --export=DB_LOC,FW_CONFIG_FILE,VENV_LOC
-            module unload intel
+            module load intel
             module load python/2.7.3
             module swap numpy numpy/1.8.1
             module use /usr/common/das/Modules/modulefiles
