@@ -2,7 +2,8 @@
 MPenv
 =====
 
-This codebase helps users create a virtual environment for running FireWorks within Materials Project in a semi-automated way.
+This codebase helps users create a virtual environment for running FireWorks
+within Materials Project in a semi-automated way.
 
 
 User instructions
@@ -11,20 +12,34 @@ User instructions
 Warnings
 --------
 
-1. If you are planning on running VASP or any other commercial code, make sure you have communicated your license to NERSC and have access to running it. The MPEnv will not give you access to any codes for which you are not a licensed user.
+1. If you are planning on running VASP or any other commercial code, make sure
+   you have communicated your license to NERSC and have access to running it.
+   The MPEnv will not give you access to any codes for which you are not a
+   licensed user.
 
 2. This only works on NERSC
 
-3. This only works if your NERSC shell is BASH, not CSH. Note that by default NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You cannot just start bash within CSH or virtualenv fails at NERSC.** To change your default shell, login to nim.nersc.gov, go to 'Logins by host', then 'change login shell', then change your shells. Type `echo $SHELL` when logged in to confirm that your shell is BASH (e.g. `/bin/bash`).
+3. This only works if your NERSC shell is BASH, not CSH. Note that by default
+   NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You
+   cannot just start bash within CSH or virtualenv fails at NERSC.** To change
+   your default shell, login to nim.nersc.gov, go to 'Logins by host', then
+   'change login shell', then change your shells. Type `echo $SHELL` when
+   logged in to confirm that your shell is BASH (e.g. `/bin/bash`).
 
-4. After creating your environment, you can't move or rename it. If you need to delete it see the instructions below.
+4. After creating your environment, you can't move or rename it. If you need to
+   delete it see the instructions below.
 
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot log into ``matgen.nersc.gov``, run ``id`` on another NERSC system (Hopper, Edison) and check that you're in the ``matcomp`` group. If not, request to be added to the group by sending an e-mail to an administrator (Patrick Huck). Hopper is scheduled to be retired by January 2016, so use it at your own risk.
+1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log
+   into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot log into
+   ``matgen.nersc.gov``, run ``id`` on another NERSC system (Hopper, Edison)
+   and check that you're in the ``matcomp`` group. If not, request to be added
+   to the group by sending an e-mail to an administrator (Patrick Huck). Hopper
+   is scheduled to be retired by January 2016, so use it at your own risk.
 
-2. Load necessary modules. In the future, you'll be able to skip this on matgen (we're trying to get all necessary modules loaded by default)::
+2. Load necessary modules::
 
     # Edison
     module load python/2.7.9
@@ -52,8 +67,13 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     python setup.py develop
 
   .. note::
-   * If the virtualenv command fails, make sure you have set your *default* shell to be BASH and not CSH.
-   * If the ``git clone`` command fails, make sure your SSH key for the NERSC machine is registered under your GitHub username. This is done by typing ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com, click account settings at top-right, then the 'SSH keys' section).
+   * If the virtualenv command fails, make sure you have set your *default*
+     shell to be BASH and not CSH.
+   * If the ``git clone`` command fails, make sure your SSH key for the NERSC
+     machine is registered under your GitHub username. This is done by typing
+     ``ssh-keygen -t dsa`` (hit enter at all prompts) and then copying your
+     ``~/.ssh/id_dsa.pub`` file to your Github account (log into github.com,
+     click account settings at top-right, then the 'SSH keys' section).
 
 3. Type ``which mpenv``. If the installation was successful, the system should find an executable.
 
