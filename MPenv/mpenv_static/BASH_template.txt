@@ -7,10 +7,13 @@ alias update_codes='python $SCRIPT_LOC/update_codes.py'
 if [ "$NERSC_HOST" == "matgen" ]
 then
    module load vim
+   module load intel
    module load python/2.7.3
    module swap numpy numpy/1.8.1
    module load virtualenv
    module load virtualenvwrapper
+   module use /usr/common/das/Modules/modulefiles
+   module load vasp/5.2
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
    # Load Boltztrap
    export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.3/src
