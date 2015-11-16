@@ -55,6 +55,10 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load virtualenv
     module load virtualenvwrapper
 
+  .. note::
+    See bullet #4 in Part 4 for the role of the intel module when updating
+    codes on matgen!
+
 3. Create virtual environment and install MPenv code::
 
     mkdir admin_env
@@ -188,7 +192,9 @@ customize. Here are a few.
 Part 4 - Modifying or updating your codebases
 ---------------------------------------------
 
-.. note:: Currently this only seems to work on Hopper due to strange NERSC updates messing with SSL certs.
+.. note::
+  Currently this only seems to work on Hopper due to strange NERSC updates
+  messing with SSL certs.
 
 1. The codes installed with your environment are in ``<ENV_NAME>/codes``. If
    you modify these codes (e.g. change a workflow in MPWork's ``snl_to_wf()``
@@ -202,6 +208,11 @@ Part 4 - Modifying or updating your codebases
 3. You can also ``git pull`` individually within the repos inside
    ``<ENV_NAMES>/codes``. If the version number changed, then you also need to
    run ``python setup.py develop``.
+
+4. On matgen, you need to *unload* the intel module when trying to build and/or
+   install python code! However, make sure to load the intel module again
+   before running VASP jobs! Alternatively, you can log out and into NERSC
+   again or ``source ~/.bashrc.ext``.
 
 Running Jobs
 ============
