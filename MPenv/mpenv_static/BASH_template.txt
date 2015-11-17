@@ -40,6 +40,16 @@ then
    $$PACKMOL
 fi
 
+if [ "$NERSC_HOST" == "cori" ]
+then
+   module load python/2.7.10
+   module load scipy
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
+   module swap numpy numpy/1.9.2
+   $$PACKMOL
+fi
+
+
 if [[ $( hostname -a ) =~ .*vesta.*anl.gov.* ]]
 then
 	soft add +JCESR
