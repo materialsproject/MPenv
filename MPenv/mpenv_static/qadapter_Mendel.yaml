@@ -5,7 +5,7 @@ nodes: 2
 ntasks_per_node: 16
 walltime: '24:00:00'
 queue: matgen_prior
-account: matgen
+account: matcomp
 job_name: null
 pre_rocket: null
 post_rocket: null
