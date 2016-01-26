@@ -51,7 +51,8 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load vim
     module unload intel
     module load python/2.7.3
-    module swap numpy numpy/1.8.1
+    module swap numpy numpy/1.9.2
+    module swap scipy scipy/0.14.0
     module load virtualenv
     module load virtualenvwrapper
 
@@ -116,7 +117,8 @@ Part 2 - Install MP codes at NERSC
     module load vim
     module unload intel
     module load python/2.7.3
-    module swap numpy numpy/1.8.1
+    module swap numpy numpy/1.9.2
+    module swap scipy scipy/0.14.0
     module load virtualenv
     module load virtualenvwrapper
 
@@ -256,7 +258,8 @@ When you're ready to begin (logged into NERSC):
     module load vim
     module unload intel
     module load python/2.7.3
-    module swap numpy numpy/1.8.1
+    module swap numpy numpy/1.9.2
+    module swap scipy scipy/0.14.0
     module load virtualenv
     module load virtualenvwrapper
 
