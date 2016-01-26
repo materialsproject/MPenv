@@ -49,7 +49,7 @@ def create_env():
     files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
     codes_dir = os.path.join(root_dir, args.name, 'codes')
 
-    MACHINES = ('Mendel', 'Hopper', 'Vesta', 'Edison')  # note: you must modify BASH_template.txt when adding machines
+    MACHINES = ('Mendel', 'Vesta', 'Edison', 'Cori')  # note: you must modify BASH_template.txt when adding machines
 
     print 'VALIDATING DIRECTORY'
     envtype = "FW"

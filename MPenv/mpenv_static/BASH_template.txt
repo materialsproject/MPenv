@@ -9,7 +9,7 @@ then
    module load vim
    module load intel
    module load python/2.7.3
-   module swap numpy numpy/1.8.1
+   module swap numpy numpy/1.9.2
    module load virtualenv
    module load virtualenvwrapper
    module use /usr/common/das/Modules/modulefiles
@@ -20,23 +20,27 @@ then
    module load mkl/10.2
 fi
 
-if [ "$NERSC_HOST" == "hopper" ]
+if [ "$NERSC_HOST" == "edison" ]
 then
-   module load python/2.7.9
+   module load python
+	module load numpy
    module load scipy
-   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Hopper/FW_config.yaml'
-   module swap numpy numpy/1.8.2
+	module load virtualenv
+	module load virtualenvwrapper
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
    $$PACKMOL
 fi
 
-if [ "$NERSC_HOST" == "edison" ]
+if [ "$NERSC_HOST" == "cori" ]
 then
-   module load python/2.7.9
+   module load python
+	module load numpy
    module load scipy
-   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
-   module swap numpy numpy/1.9.2
+	module load virtualenv
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Cori/FW_config.yaml'
    $$PACKMOL
 fi
+
 
 if [[ $( hostname -a ) =~ .*vesta.*anl.gov.* ]]
 then
