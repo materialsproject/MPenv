@@ -10,14 +10,19 @@ then
    module load intel
    module load python/2.7.3
    module swap numpy numpy/1.9.2
+<<<<<<< HEAD
+=======
+   module swap scipy scipy/0.14.0
+>>>>>>> master
    module load virtualenv
    module load virtualenvwrapper
    module use /usr/common/das/Modules/modulefiles
    module load vasp/5.2
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
    # Load Boltztrap
-   export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.3/src
+   export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.5/src
    module load mkl/10.2
+   module load lapack-intel
 fi
 
 if [ "$NERSC_HOST" == "edison" ]
@@ -41,6 +46,18 @@ then
    $$PACKMOL
 fi
 
+<<<<<<< HEAD
+=======
+if [ "$NERSC_HOST" == "cori" ]
+then
+   module load python/2.7.10
+   module load scipy
+   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
+   module swap numpy numpy/1.9.2
+   $$PACKMOL
+fi
+
+>>>>>>> master
 
 if [[ $( hostname -a ) =~ .*vesta.*anl.gov.* ]]
 then
