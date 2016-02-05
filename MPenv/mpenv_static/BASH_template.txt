@@ -10,10 +10,7 @@ then
    module load intel
    module load python/2.7.3
    module swap numpy numpy/1.9.2
-<<<<<<< HEAD
-=======
    module swap scipy scipy/0.14.0
->>>>>>> master
    module load virtualenv
    module load virtualenvwrapper
    module use /usr/common/das/Modules/modulefiles
@@ -32,6 +29,7 @@ then
    module load scipy
 	module load virtualenv
 	module load virtualenvwrapper
+	module load vasp/5.3.5
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
    $$PACKMOL
 fi
@@ -42,22 +40,10 @@ then
 	module load numpy
    module load scipy
 	module load virtualenv
+	module load vasp/5.3.5
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Cori/FW_config.yaml'
    $$PACKMOL
 fi
-
-<<<<<<< HEAD
-=======
-if [ "$NERSC_HOST" == "cori" ]
-then
-   module load python/2.7.10
-   module load scipy
-   export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Edison/FW_config.yaml'
-   module swap numpy numpy/1.9.2
-   $$PACKMOL
-fi
-
->>>>>>> master
 
 if [[ $( hostname -a ) =~ .*vesta.*anl.gov.* ]]
 then

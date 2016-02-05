@@ -7,11 +7,6 @@ walltime: '24:00:00'
 queue: regular
 account: matgen
 job_name: null
-pre_rocket: |
-            module load python
-            module load numpy
-            module load scipy
-            module load vasp/5.3.5
-
+pre_rocket: null
 post_rocket: null
 logdir: $$CONFIG_LOC/logs
