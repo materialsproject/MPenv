@@ -28,16 +28,22 @@ Warnings
 
 4. After creating your environment, you can't move or rename it. If you need to
    delete it see the instructions below.
+   
+5. Unfortunately, differences between python versions on cori, edison, and matgen
+   require you to install a separate environment for each machine.  However, you 
+   can use the same database configuration files for multiple machines.  For example, you 
+   might have wc_surfaces installed on matgen, and can then copy wc_surface_files to create
+   a new environment, say wc_surface_cori_files to install the environment wc_surface_cori.
 
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison. Since Carver is retired as of Sep-30-2015, you can also log
-   into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot log into
-   ``matgen.nersc.gov``, run ``id`` on another NERSC system (Hopper, Edison)
+1. Log into Edison/Cori/Matgen. Note that the matgen nodes ("Mendel") are accessible 
+   by logging into into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot
+   log into ``matgen.nersc.gov``, run ``id`` on another NERSC system (Cori, Edison)
    and check that you're in the ``matcomp`` group. If not, request to be added
    to the group by sending an e-mail to an administrator (Patrick Huck). Hopper
-   is scheduled to be retired by January 2016, so use it at your own risk.
+   has been retired as of January 2016.
 
 2. Load necessary modules::
 
@@ -46,6 +52,11 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+
+    # Cori
+    module load python
+    module load numpy
+    module load virtualenv
 
     # matgen
     module load vim
@@ -113,6 +124,11 @@ Part 2 - Install MP codes at NERSC
     module load virtualenv
     module load virtualenvwrapper
 
+    # Cori
+    module load python
+    module load numpy
+    module load virtualenv
+
     # matgen
     module load vim
     module unload intel
@@ -149,7 +165,8 @@ Part 2 - Install MP codes at NERSC
 
 7. Activate your environment by typing ``use_<ENV_NAME>``, e.g., ``use_aj_vasp``.
 
-8. Reset your databases by typing ``go_testing --clear -n 'reset'``.
+8. If you don't need the data within them, reset your databases 
+   by typing ``go_testing --clear -n 'reset'``.
 
 If all this goes OK, your environment should be installed!
 
@@ -188,7 +205,7 @@ customize. Here are a few.
    Note that members of the ``matgen`` group at NERSC should be able to set
    their <PATH_TO_POTCARS> as ``/project/projectdirs/matgen/POTCARs``.
 
-3. If you modify your ``bashrc.ext``, remember the changes are not applied
+4. If you modify your ``bashrc.ext``, remember the changes are not applied
    unless you type ``source ~/.bashrc.ext``.
 
 Part 4 - Modifying or updating your codebases
@@ -253,6 +270,11 @@ When you're ready to begin (logged into NERSC):
     module load numpy/1.9.2
     module load virtualenv
     module load virtualenvwrapper
+
+    # Cori
+    module load python
+    module load numpy
+    module load virtualenv
 
     # matgen
     module load vim

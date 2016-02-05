@@ -1,19 +1,12 @@
 _fw_name: CommonAdapter
 _fw_q_type: SLURM
-rocket_launch: rlaunch -c /global/u1/m/montoyjh/jhm_vasp/config/config_Cori singleshot
+rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
 nodes: 2
 ntasks_per_node: 32
-walltime: '12:00:00'
+walltime: '24:00:00'
 queue: regular
 account: matgen
 job_name: null
-pre_rocket: |
-            #SBATCH --export=DB_LOC,FW_CONFIG_FILE,VENV_LOC
-            module load python/2.7.9
-            module swap numpy numpy/1.9.2
-            module load vasp/5.2
-            module load nwchem
-            source $VENV_LOC
-
+pre_rocket: null
 post_rocket: null
-logdir: /global/u1/m/montoyjh/jhm_vasp/config/logs
+logdir: $$CONFIG_LOC/logs
