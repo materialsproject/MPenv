@@ -94,8 +94,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 3. Type ``which mpenv``. If the installation was successful, the system should
    find an executable.
 
-4. Request an environment from an administrator (currently Patrick Huck; backup
-   Anubhav Jain). The current procedure is just to send an email with a
+4. Request an environment from an administrator (currently Patrick Huck). The current procedure is just to send an email with a
    requested environment name, e.g. ``aj_vasp``. A good environment name should
    look like ``A_B`` where ``A`` is your initials and ``B`` is some SHORT
    description that will help you remember what the environment is for. another
