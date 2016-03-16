@@ -17,7 +17,7 @@ Warnings
    The MPEnv will not give you access to any codes for which you are not a
    licensed user.
 
-2. This only works on NERSC
+2. This only works on NERSC - and on SJTU's Pi Cluster ;-)
 
 3. This only works if your NERSC shell is BASH, not CSH. Note that by default
    NERSC often sets CSH. **Seriously, BASH needs to be your DEFAULT shell. You
@@ -28,17 +28,17 @@ Warnings
 
 4. After creating your environment, you can't move or rename it. If you need to
    delete it see the instructions below.
-   
+
 5. Unfortunately, differences between python versions on cori, edison, and matgen
-   require you to install a separate environment for each machine.  However, you 
-   can use the same database configuration files for multiple machines.  For example, you 
+   require you to install a separate environment for each machine.  However, you
+   can use the same database configuration files for multiple machines.  For example, you
    might have wc_surfaces installed on matgen, and can then copy wc_surface_files to create
    a new environment, say wc_surface_cori_files to install the environment wc_surface_cori.
 
 Part 1 - Install the MPenv code at NERSC and request an environment
 -------------------------------------------------------------------
 
-1. Log into Edison/Cori/Matgen. Note that the matgen nodes ("Mendel") are accessible 
+1. Log into Edison/Cori/Matgen or SJTU's Pi Cluster. Note that the matgen nodes ("Mendel") are accessible
    by logging into into ``matgen.nersc.gov`` to submit jobs to Mendel. If you cannot
    log into ``matgen.nersc.gov``, run ``id`` on another NERSC system (Cori, Edison)
    and check that you're in the ``matcomp`` group. If not, request to be added
@@ -67,18 +67,33 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module load virtualenv
     module load virtualenvwrapper
 
+    # SJTU Pi
+    unset MODULEPATH
+    module use /lustre/usr/modulefiles/pi
+    module load anaconda/2
+
   .. note::
     See bullet #4 in Part 4 for the role of the intel module when updating
     codes on matgen!
 
 3. Create virtual environment and install MPenv code::
 
+    # on NERSC
     mkdir admin_env
     virtualenv admin_env
     source admin_env/bin/activate
     cd admin_env
     eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     git clone git@github.com:materialsproject/MPenv.git
+    cd MPenv
+    python setup.py develop
+
+    # on SJTU Pi
+    mkdir admin_env
+    conda create --path admin_env numpy scipy matplotlib
+    source activate admin_env
+    cd admin_env
+    git clone https://github.com/materialsproject/MPenv.git
     cd MPenv
     python setup.py develop
 
@@ -94,7 +109,9 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 3. Type ``which mpenv``. If the installation was successful, the system should
    find an executable.
 
-4. Request an environment from an administrator (currently Patrick Huck). The current procedure is just to send an email with a
+4. Request an environment from an administrator (currently Patrick Huck for
+   NERSC, and Hong Zhu for SJTU). The current procedure is just to send an
+   email with a
    requested environment name, e.g. ``aj_vasp``. A good environment name should
    look like ``A_B`` where ``A`` is your initials and ``B`` is some SHORT
    description that will help you remember what the environment is for. another
@@ -137,15 +154,28 @@ Part 2 - Install MP codes at NERSC
     module load virtualenv
     module load virtualenvwrapper
 
+    # SJTU Pi
+    unset MODULEPATH
+    module use /lustre/usr/modulefiles/pi
+    module load anaconda/2
+
 3. add GitHub ssh-key and activate the admin environment that allows you to use
    ``mpenv``::
 
+    # on NERSC
     eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     source admin_env/bin/activate
 
+    # on SJTU
+    source activate admin_env
+
 4. Now, you can install your environment. Staying in your home directory, type::
 
+    # on NERSC
     mpenv aj_vasp
+
+    # on SJTU
+    mpenv --conda --https aj_vasp
 
   .. note::
    * Replace ``aj_vasp`` with whatever environment name you requested, e.g.
@@ -164,7 +194,12 @@ Part 2 - Install MP codes at NERSC
 
 7. Activate your environment by typing ``use_<ENV_NAME>``, e.g., ``use_aj_vasp``.
 
-8. If you don't need the data within them, reset your databases 
+  .. note::
+   If you're on SJTU, the source command in the ``use_<ENV_NAME>`` alias in the
+   .bashrc.ext doesn't work. Replace it with ``source activate
+   <ENV_NAME>/virtenv_<ENV_NAME>``.
+
+8. If you don't need the data within them, reset your databases
    by typing ``go_testing --clear -n 'reset'``.
 
 If all this goes OK, your environment should be installed!
@@ -284,10 +319,19 @@ When you're ready to begin (logged into NERSC):
     module load virtualenv
     module load virtualenvwrapper
 
+    # SJTU Pi
+    unset MODULEPATH
+    module use /lustre/usr/modulefiles/pi
+    module load anaconda/2
+
 4. Add your GitHub sshkey and activate your admin environment::
 
+    # on NERSC
     eval `ssh-agent -s` && ssh-add <path-to-private-github-key>
     source admin_env/bin/activate
+
+    # on SJTU Pi
+    source activate admin_env
 
 5. Pull admin environment changes::
 
@@ -297,7 +341,9 @@ When you're ready to begin (logged into NERSC):
 6. Go back to your home directory and reinstall::
 
     cd ~
-    mpenv aj_vasp
+    mpenv aj_vasp # on NERSC
+    mpenv --conda --https aj_vasp # on SJTU Pi
+
 
   .. note:: Replace ``aj_vasp`` with whatever environment name you requested,
   e.g. ``wc_surfaces``. Also, there is a ``--pymatpro`` option if you need to
