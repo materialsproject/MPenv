@@ -1,0 +1,12 @@
+_fw_name: CommonAdapter
+_fw_q_type: SLURM
+rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot --offline
+nodes: 2
+ntasks_per_node: 16
+walltime: '24:00:00'
+queue: cpu
+account: null
+job_name: null
+pre_rocket: null
+post_rocket: null
+logdir: $$CONFIG_LOC/logs
