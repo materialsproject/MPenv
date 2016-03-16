@@ -11,7 +11,7 @@ then
    module load anaconda/2
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_SjtuPi/FW_config.yaml'
    export PATH=/lustre/home/umjzhh/keliu/VASP_unpacked/vasp.5.4.1.05Feb16/bin:$PATH
-   #export PATH=$PATH:$HOME/boltztrap-1.2.5/src
+   export PATH=$PATH:$HOME/bin # for boltztrap
 fi
 
 if [ "$NERSC_HOST" == "matgen" ]
