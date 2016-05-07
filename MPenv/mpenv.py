@@ -73,7 +73,9 @@ def create_env():
     c.append(("mkdir", args.name))
     c.append(("cd", args.name))
 
-    if not os.path.exists(os.path.join(root_dir, args.name, "virtenv_{}".format(args.name))):
+    virtenv_exists = os.path.exists(os.path.join(root_dir, args.name, "virtenv_{}".format(args.name)))
+
+    if not virtenv_exists:
 	c.append(('print', 'SETTING UP VIRTUALENV'))
 	c.append(("mkdir", "virtenv_{}".format(args.name)))
 	c.append("virtualenv --no-site-packages virtenv_{}".format(args.name))
@@ -84,8 +86,11 @@ def create_env():
     c.append(("cd", 'codes'))
 
     if not os.path.exists(os.path.join(codes_dir, 'fireworks')):
-	c.append(('print', 'INSTALLING FireWorks (developer mode)'))
+	c.append(('print', 'CLONING FireWorks'))
         c.append("git clone git@github.com:materialsproject/fireworks.git")
+
+    if not virtenv_exists:
+	c.append(('print', 'INSTALLING FireWorks (developer mode)'))
         c.append(("cd", 'fireworks'))
         c.append("python setup.py develop")
 	c.append(("cd", '..'))
@@ -93,51 +98,73 @@ def create_env():
     if envtype == "MP" or envtype == "rubicon":
 
 	if not os.path.exists(os.path.join(codes_dir, 'pymatgen')):
-	  c.append(('print', 'INSTALLING pymatgen (developer mode)'))
+	  c.append(('print', 'CLONING pymatgen'))
+	  c.append("git clone git@github.com:materialsproject/pymatgen.git")
+
+        if not virtenv_exists:
+   	  c.append(('print', 'INSTALLING pymatgen (developer mode)'))
 	  c.append("pip install pyhull")
 	  c.append("pip install pyyaml")
 	  c.append("pip install smoqe")  # for pymatgen-db
 	  c.append("pip install mongomock")  # for pymatgen-db
 	  c.append("pip install django")  # for pymatgen-db
-	  c.append("git clone git@github.com:materialsproject/pymatgen.git")
 	  c.append(("cd", 'pymatgen'))
 	  c.append("python setup.py develop")
 	  c.append(("cd", '..'))
 
 	if not os.path.exists(os.path.join(codes_dir, 'pymatgen-db')):
-	  c.append(('print', 'INSTALLING pymatgen-db (developer mode)'))
+	  c.append(('print', 'CLONING pymatgen-db'))
 	  c.append("git clone git@github.com:materialsproject/pymatgen-db.git")
+
+        if not virtenv_exists:
+	  c.append(('print', 'INSTALLING pymatgen-db (developer mode)'))
 	  c.append(("cd", 'pymatgen-db'))
 	  c.append("python setup.py develop")
 	  c.append(("cd", '..'))
 
 	if not os.path.exists(os.path.join(codes_dir, 'custodian')):
-	  c.append(('print', 'INSTALLING custodian (developer mode)'))
+	  c.append(('print', 'CLONING custodian'))
 	  c.append("git clone git@github.com:materialsproject/custodian.git")
+
+        if not virtenv_exists:
+	  c.append(('print', 'INSTALLING custodian (developer mode)'))
 	  c.append(("cd", 'custodian'))
 	  c.append("python setup.py develop")
 	  c.append(("cd", '..'))
 
 	if not os.path.exists(os.path.join(codes_dir, 'MPWorks')):
-	  c.append(('print', 'INSTALLING MPWorks (developer mode)'))
+	  c.append(('print', 'CLONING MPWorks'))
 	  c.append("git clone git@github.com:materialsproject/MPWorks.git")
+
+        if not virtenv_exists:
+	  c.append(('print', 'INSTALLING MPWorks (developer mode)'))
 	  c.append(("cd", 'MPWorks'))
 	  c.append("python setup.py develop")
 	  c.append(("cd", '..'))
 
-    if args.pymatpro and not os.path.exists(os.path.join(codes_dir, 'pymatpro')):
-	c.append(('print', 'INSTALLING pymatpro (developer mode)'))
-	c.append("git clone git@github.com:materialsproject/pymatpro.git")
-	c.append(("cd", 'pymatpro'))
-	c.append("python setup.py develop")
-	c.append(("cd", '..'))
+    if args.pymatpro:
 
-    if envtype == "rubicon" and not os.path.exists(os.path.join(codes_dir, 'rubicon')):
-	c.append(('print', 'INSTALLING rubicon (developer mode)'))
-	c.append("git clone git@github.com:materialsproject/rubicon.git")
-	c.append(("cd", 'rubicon'))
-	c.append("python setup.py develop")
-	c.append(("cd", '..'))
+        if not os.path.exists(os.path.join(codes_dir, 'pymatpro')):
+	  c.append(('print', 'CLONING pymatpro'))
+	  c.append("git clone git@github.com:materialsproject/pymatpro.git")
+
+        if not virtenv_exists:
+	  c.append(('print', 'INSTALLING pymatpro (developer mode)'))
+	  c.append(("cd", 'pymatpro'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
+
+    if envtype == "rubicon":
+
+        if not os.path.exists(os.path.join(codes_dir, 'rubicon')):
+	  c.append(('print', 'CLONING rubicon'))
+	  c.append("git clone git@github.com:materialsproject/rubicon.git")
+
+        if not virtenv_exists:
+	  c.append(('print', 'INSTALLING rubicon (developer mode)'))
+	  c.append(("cd", 'rubicon'))
+	  c.append("python setup.py develop")
+	  c.append(("cd", '..'))
 
     c.append(('print', 'ADDING SETTINGS'))
     c.append(("cd", os.path.join(root_dir, args.name)))
