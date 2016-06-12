@@ -90,7 +90,7 @@ Part 1 - Install the MPenv code at NERSC and request an environment
 
     # on SJTU Pi
     mkdir admin_env
-    conda create --path admin_env numpy scipy matplotlib
+    conda create --name admin_env numpy scipy matplotlib
     source activate admin_env
     cd admin_env
     git clone https://github.com/materialsproject/MPenv.git

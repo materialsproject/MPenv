@@ -253,7 +253,12 @@ def create_env():
                 shutil.copyfile(os.path.join(static_dir, command[1]), os.path.join(root_dir, args.name, 'config', 'scripts', command[1]))
             elif command[0] == 'append':
                 replacements = {}
-                replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
+                if MACHINES is 'SjtuPi':
+                    replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'activate virtenv_{}'.format(args.name))
+                    replacements["DEACTIVATE"] = "source deactivate"
+                else:
+                    replacements["ACTIVATE"] = os.path.join(root_dir, args.name, 'virtenv_{}/bin/activate'.format(args.name))
+                    replacements["DEACTIVATE"] = "deactivate"
                 replacements["CONFIG_LOC"] = os.path.join(root_dir, args.name, 'config')
                 replacements["ENV_LOC"] = os.path.join(root_dir, args.name)
                 replacements["LOGDIR"] = os.path.join(root_dir, args.name, 'config', 'logs')

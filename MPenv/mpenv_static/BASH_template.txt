@@ -73,7 +73,7 @@ then
         export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mira/FW_config.yaml'
 fi
 
-alias use_none='deactivate; export FW_CONFIG_FILE=""; export DB_LOC=""; export VENV_LOC=""; export SCRIPT_LOC=""; echo "You are deactivated."'
+alias use_none='$$DEACTIVATE; export FW_CONFIG_FILE=""; export DB_LOC=""; export VENV_LOC=""; export SCRIPT_LOC=""; echo "You are deactivated."'
 $$MATERIALSPROJECT
 $$OPENBABEL
 # MPenv $$NAME end--->
