@@ -232,7 +232,7 @@ def create_env():
                 elif envtype == "MP" or envtype == "rubicon":
                     replacements["PACKAGES"] = "\n  - mpworks.firetasks\n  - mpworks.dupefinders\n  - mpworks.examples"
                 if envtype == "rubicon":
-                    replacements["PACKAGES"] += "\n  - rubicon.firetasks\n  - rubicon.dupefinders"
+                    replacements["PACKAGES"] += "\n  - rubicon.firetasks.qchem\n  - rubicon.firetasks.gaussian\n  - rubicon.firetasks.lammps"
 
                 with open(os.path.join(static_dir, 'BASH_template.txt')) as f:
                     t = CustomTemplate(f.read())
