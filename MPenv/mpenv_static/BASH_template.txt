@@ -14,7 +14,7 @@ then
    module load virtualenv
    module load virtualenvwrapper
    module use /usr/common/das/Modules/modulefiles
-   module load vasp/5.2
+   module load vasp/5.4.1
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
    # Load Boltztrap
    export PATH=$PATH:/project/projectdirs/matgen/boltztrap/boltztrap-1.2.5/src
