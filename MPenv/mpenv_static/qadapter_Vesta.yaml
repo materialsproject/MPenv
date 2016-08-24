@@ -4,15 +4,15 @@ rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
 mpi_cmd: runjob
 vasp_cmd: /projects/JCESR/bin/vasp.bgq.ibm.complex
 gvasp_cmd: /projects/JCESR/bin/vasp.bgq.ibm
-nnodes: 4
-ppnode: 16
+nnodes: 32
+ppnode: 8
 walltime: '24:00:00'
-queue: Q.JCESR
+queue: Q.prod-short
 account: JCESR
 job_name: null
 pre_rocket: |
             #PBS -v DB_LOC,FW_CONFIG_FILE,VENV_LOC
-            soft add +JCESR
+
             source $VENV_LOC
             echo $(env | grep COBALT)
 
