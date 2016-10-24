@@ -7,6 +7,7 @@ import shutil
 import string
 import subprocess
 import traceback
+from urllib3.util.ssl_ import HAS_SNI
 
 __author__ = 'Anubhav Jain'
 __copyright__ = 'Copyright 2013, The Materials Project'
@@ -201,15 +202,11 @@ def create_env():
     try:
         for command in c:
             if isinstance(command, str):
-                try:
-                    subprocess.check_call(command, shell=True, executable="/bin/bash")
-                except:
-                    if 'pip install' in command:
-                        easy_command = 'easy_install ' + command.split(' ')[-1]
-                        subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
-                    else:
-                        traceback.print_exc()
-                        raise ValueError('Error executing command')
+	        if not HAS_SNI and 'pip install' in command:
+		    easy_command = 'easy_install ' + command.split(' ')[-1]
+		    subprocess.check_call(easy_command, shell=True, executable="/bin/bash")
+		else:
+		    subprocess.check_call(command, shell=True, executable="/bin/bash")
 
             elif command[0] == 'mkdir':
 		if not os.path.exists(command[1]):
