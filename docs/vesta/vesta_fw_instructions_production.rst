@@ -19,16 +19,16 @@ To address the issues with subblock jobs, we run a special version of Cobalt wit
 User instructions
 =================
 
-Things to remember immediately
-------------------------------
+Things to remember
+------------------
 
 1. The Blue Gene is a cross compiling environment. Even though the front and backend systems are both PowerPC 64, they're running very different operating systems and vectorized code (including NumPy) will die with SIGILL if the wrong binary is run in the wrong environment. Most of what we're building is for the frontend to drive particular workflows that run computational jobs on the backend.
 
 2. There is no way to log into the compute nodes. The compute node OS isn't just single user, it's also single process, lacking things like exec(). You'll have to count on stderr / stdout / Cobalt to tell you what's going on.
 
-3. The Blue Gene community uses the words block and partition, as well as job and run in a way that sounds interchangable. They mostly are.
+3. The Blue Gene community uses the words block and partition, as well as job and run, interchangablely. These terms mostly are so don't sweat nuances in use.
 
-4. Nothing you do in your partition can crash jobs running on another partition - except really bad I/O. The worst thing that happens if you fork bomb a compute node is the control system waits for running jobs on your block to end and shuts down the block. Every run arranged through the parent Cobalt gets a fresh block.
+4. Nothing you do in your partition can crash jobs running on another partition - except really bad I/O. The worst thing that happens if you crash a compute node is the control system waits for running jobs on your block to end and shuts down the block. Every run arranged through the parent Cobalt gets a fresh block.
 
 5. I/O nodes are another matter - /tmp is automatically swept after every run, but anything an application writes there is stealing memory from the application's ability to do I/O during that run. If an I/O node does down, it will take all runs with it.
 
@@ -72,7 +72,7 @@ Getting started
     
    will return your environment to normal. 
   
-3. At this point, we should be able to move forward in a mostly generic fashion, but we'll need to adjust the scripts to use system packages. If pip tries to install PyYAML, NumPy, or SciPy, everything will fail::
+3. At this point, we should be able to move forward with MPenv in a mostly generic fashion, but we'll need to adjust the scripts to use system packages. If pip tries to install PyYAML, NumPy, or SciPy, everything will fail::
     
     virtualenv --system-site-packages admin_env
     source admin_env/bin/activate
@@ -105,7 +105,9 @@ Almost everything is provided by adding +JCESR to your ~/.soft file. If hardcode
 
 
 Building everything from bare metal
------------------------------------
+===================================
+
+0. This should all be completely unnecessary.
 
 1. This is done for you in softenv by adding +JCESR. The system Python on Vesta is dated, so we have a few things to build on our own. We'll start with a wide-char enabled Python and pip::
 

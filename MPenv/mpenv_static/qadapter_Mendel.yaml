@@ -4,7 +4,7 @@ rocket_launch: rlaunch -c $$CONFIG_LOC/config_$$MACHINE singleshot
 nodes: 2
 ntasks_per_node: 16
 walltime: '24:00:00'
-queue: matgen_prior
+queue: matgen_reg
 account: matcomp
 job_name: null
 pre_rocket: null
