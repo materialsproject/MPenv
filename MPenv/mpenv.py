@@ -112,6 +112,7 @@ def create_env():
 
         if not virtenv_exists:
    	  c.append(('print', 'INSTALLING pymatgen (developer mode)'))
+	  c.append("pip install spglib")
 	  c.append("pip install pyhull")
 	  c.append("pip install pyyaml")
 	  c.append("pip install smoqe")  # for pymatgen-db
