@@ -1,7 +1,7 @@
 
 
 from argparse import ArgumentParser
-import os, time, re
+import os, re
 from os.path import expanduser
 import shutil
 import string
@@ -51,8 +51,8 @@ def create_env():
 	    print 'ERROR: make sure to remove {} section from {}!'.format(args.name, BASHRC_FILE)
 	    return
 
-    print '3 seconds time to abort ...'
-    time.sleep(3)
+    cont = raw_input("Continue? (y/N) ").lower() == 'y'
+    if not cont: return
 
     module_dir = os.path.dirname(os.path.abspath(__file__))
     static_dir = os.path.join(module_dir, 'mpenv_static')
