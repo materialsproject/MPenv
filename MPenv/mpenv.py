@@ -25,12 +25,23 @@ def create_env():
     parser.add_argument('name', help='directory containing environment files', default=None)
     parser.add_argument('--pymatpro', help='install pymatpro', action='store_true')
 
+    root_dir = os.getcwd()
     args = parser.parse_args()
     env_exists = os.path.exists(args.name)
+    virtenv_dir = os.path.join(root_dir, args.name, "virtenv_{}".format(args.name))
+    virtenv_exists = os.path.exists(virtenv_dir)
 
     if env_exists:
-	print 'OK, will overwrite config files and (re-)install missing code repositories.'
-	print 'FYI: Remove {} directory to start from scratch'.format(args.name)
+	print 'OK, environment directory {} exists.'.format(args.name)
+	print '  => Will overwrite config files and clone missing code repositories.'
+	print '  => FYI: Remove {} directory to start from scratch'.format(args.name)
+	if virtenv_exists:
+	    print 'OK, virtenv directory for {} exists.'.format(args.name)
+	    print '  => Will NOT install codes (i.e. run `python setup.py develop` in code repos).'
+	    print '  => FYI: remove {} to reinstall codes'.format(virtenv_dir)
+	else:
+	    print 'OK, virtenv directory for {} does not exist.'.format(args.name)
+	    print '  => Will install codes (i.e. run `python setup.py develop` in all code repos).'
     else:
       print 'OK, will install brand-new {} environment'.format(args.name)
 
@@ -43,7 +54,6 @@ def create_env():
     print '3 seconds time to abort ...'
     time.sleep(3)
 
-    root_dir = os.getcwd()
     module_dir = os.path.dirname(os.path.abspath(__file__))
     static_dir = os.path.join(module_dir, 'mpenv_static')
     files_dir = os.path.join(root_dir, args.name+CONFIG_TAG)
@@ -72,8 +82,6 @@ def create_env():
     c = []
     c.append(("mkdir", args.name))
     c.append(("cd", args.name))
-
-    virtenv_exists = os.path.exists(os.path.join(root_dir, args.name, "virtenv_{}".format(args.name)))
 
     if not virtenv_exists:
 	c.append(('print', 'SETTING UP VIRTUALENV'))
