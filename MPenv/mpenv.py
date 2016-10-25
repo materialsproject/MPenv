@@ -172,6 +172,7 @@ def create_env():
 
         if not virtenv_exists:
 	  c.append(('print', 'INSTALLING rubicon (developer mode)'))
+	  c.append("pip install simplerandom")
 	  c.append(("cd", 'rubicon'))
 	  c.append("python setup.py develop")
 	  c.append(("cd", '..'))
