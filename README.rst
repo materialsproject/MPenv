@@ -72,7 +72,6 @@ Part 1 - Install the MPenv code at NERSC and request an environment
     module swap numpy numpy/1.9.2
     module swap scipy scipy/0.14.0
     module load virtualenv
-    module load virtualenvwrapper
 
   .. note::
     See bullet #4 in Part 4 for the role of the intel module when updating
@@ -142,7 +141,6 @@ Part 2 - Install MP codes at NERSC
     module swap numpy numpy/1.9.2
     module swap scipy scipy/0.14.0
     module load virtualenv
-    module load virtualenvwrapper
 
 3. add GitHub ssh-key and activate the admin environment that allows you to use
    ``mpenv``::
@@ -289,7 +287,6 @@ When you're ready to begin (logged into NERSC):
     module swap numpy numpy/1.9.2
     module swap scipy scipy/0.14.0
     module load virtualenv
-    module load virtualenvwrapper
 
 4. Add your GitHub sshkey and activate your admin environment::
 

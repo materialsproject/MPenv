@@ -12,7 +12,6 @@ then
    module swap numpy numpy/1.9.2
    module swap scipy scipy/0.14.0
    module load virtualenv
-   module load virtualenvwrapper
    module use /usr/common/das/Modules/modulefiles
    module load vasp/5.4.1
    export FW_CONFIG_$$NAME='$$CONFIG_LOC/config_Mendel/FW_config.yaml'
