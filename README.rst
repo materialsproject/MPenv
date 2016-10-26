@@ -191,11 +191,13 @@ customize. Here are a few.
    you are using Hopper to run VASP, you *must* change the mppwidth to 48.
    Repeat for all machines that you're using.
 
-2. Since ``Mendel`` is using SLURM, you'll also need to add the following to
-   ``my_fworker.yaml`` to run VASP on multiple nodes in parallel::
+2. Since ``Mendel`` is using SLURM, you'll need to add ``mpi_cmd`` to
+   ``my_fworker.yaml`` to run VASP on multiple nodes in parallel. Also
+   explicitly add the vasp command to be used on ``Mendel``::
 
     env:
         mpi_cmd: srun
+        vasp_cmd: /usr/common/usg/vasp/5.4.1/bin/vasp
 
 3. In your ``.bashrc.ext``, you'll want to add two lines (if not already done
    by ``mpenv``)::
