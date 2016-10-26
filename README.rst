@@ -211,6 +211,11 @@ customize. Here are a few.
    Note that members of the ``matgen`` group at NERSC should be able to set
    their <PATH_TO_POTCARS> as ``/project/projectdirs/matgen/POTCARs``.
 
+   Starting with pymatgen 5.0, these two environment variables should be saved
+   in ``~/.pmgrc.yaml``. You can make the simple switch via::
+
+   pmg config -a MAPI_KEY $MAPI_KEY VASP_PSP_DIR $VASP_PSP_DIR
+
 4. If you modify your ``bashrc.ext``, remember the changes are not applied
    unless you type ``source ~/.bashrc.ext``.
 
