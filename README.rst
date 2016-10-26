@@ -45,6 +45,13 @@ Part 1 - Install the MPenv code at NERSC and request an environment
    to the group by sending an e-mail to an administrator (Patrick Huck). Hopper
    has been retired as of January 2016.
 
+
+   Also, add the following line to your ``~/.bashrc.ext`` to export the
+   PIP_CERT environment variable to the path of the PEM file (see
+   http://stackoverflow.com/a/28724886)::
+
+    export PIP_CERT=/project/projectdirs/matgen/DigiCertHighAssuranceEVRootCA.pem
+
 2. Load necessary modules::
 
     # Edison
